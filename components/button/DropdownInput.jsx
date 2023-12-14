@@ -6,13 +6,17 @@ function DropdownWithInput({ title, action1, action2, action3, add, placeholder,
  const [selectedValue, setSelectedValue] = useState(title);
  const [inputValue, setInputValue] = useState("");
 
- const handleActionSelect = (action) => {
-    setSelectedValue(action);
-    onChange(action);
+ const handleInputChange = (input) => {
+    console.log("Input value:", input);
+    setInputValue(input);
+    if (onChange) {
+      onChange(input);
+    }
  };
 
- const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+ const handleDropdownItemSelect = (selectedValue) => {
+    setSelectedValue(selectedValue);
+    handleInputChange(selectedValue);
  };
 
  return (
@@ -22,24 +26,24 @@ function DropdownWithInput({ title, action1, action2, action3, add, placeholder,
         id="input-group-dropdown-1"
         variant="secondary"
       >
-        <Dropdown.Item onClick={() => handleActionSelect(action1)}>
+        <Dropdown.Item onClick={() =>handleDropdownItemSelect(action1)}>
           {action1}
         </Dropdown.Item>
-        <Dropdown.Item onClick={() => handleActionSelect(action2)}>
+        <Dropdown.Item onClick={() =>handleDropdownItemSelect(action2)}>
           {action2}
         </Dropdown.Item>
-        <Dropdown.Item onClick={() => handleActionSelect(action3)}>
+        <Dropdown.Item onClick={() =>handleDropdownItemSelect(action3)}>
           {action3}
         </Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item onClick={() => handleActionSelect(add)}>
+        <Dropdown.Item onClick={() =>handleDropdownItemSelect(add)}>
           {add}
         </Dropdown.Item>
       </DropdownButton>
       <FormControl
         aria-label="Text input with dropdown button"
         value={inputValue}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e.target.value)}
         placeholder={placeholder}
       />
     </InputGroup>

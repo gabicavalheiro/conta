@@ -5,12 +5,49 @@ import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 
 export default function AddPanel() {
-    const [isCreditSelected, setIsCreditSelected] = useState(false);
 
+    const [isCreditSelected, setIsCreditSelected] = useState(false);
     const handlePaymentTypeChange = (value) => {
         setIsCreditSelected(value === "Crédito");
     };
 
+    function handleSubmit(event) {
+        event.preventDefault();
+    
+        // Pegar os valores dos campos do formulário
+        const data = document.getElementById('data').value;
+        const valor = document.getElementById('valor').value;
+        const categoria = document.getElementById('categoria').value;
+        const metodo = document.getElementById('formaDePagamento').value;
+        const numeroDeParcelas = document.getElementById('parcela').value;
+        const descricao = document.getElementById('descricao').value;
+    
+        // Criar um objeto para armazenar os dados
+        const dados = {
+            data,
+            valor,
+            categoria,
+            metodo,
+            numeroDeParcelas,
+            descricao
+        };
+    
+        // Enviar os dados para o servidor (por exemplo, usando a API Fetch)
+        fetch('http://api-conta-certa-production.up.railway.app/saidas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Dados enviados com sucesso:', data);
+        })
+        .catch((error) => {
+            console.error('Erro ao enviar os dados:', error);
+        });
+    }
     return (
         <section className={styles.page}>
         <>
@@ -30,17 +67,17 @@ export default function AddPanel() {
                             <div className={styles.form}>
                                 <div className={styles.camp}>
                                     <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1" className="form-label" id={styles.name}>Data</label>
-                                        <input type="date" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" style={{ paddingLeft: "50px" }} />
+                                        <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Data</label>
+                                        <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  />
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="exampleInputEmail1" className="form-label" id={styles.name} style={{ marginLeft: "50px" }}>Valor</label>
-                                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" style={{ marginLeft: "50px" }} placeholder="Valor" />
+                                        <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
+                                        <input type="email" className={`form-control ${styles.inputName}`} id="exampleInputEmail1" aria-describedby="emailHelp"  placeholder="Valor" />
                                     </div>
                                 </div>
                                 <div className={styles.pass}>
                                     <div className="mb-3">
-                                        <label htmlFor="exampleInputPassword1" className="form-label" id={styles.name}>
+                                        <label htmlFor="exampleInputPassword1" className="form-label" id={styles.input} >
                                             <DropdownWithInput
                                                 title="Categoria"
                                                 action1="Administrativo"
@@ -48,20 +85,21 @@ export default function AddPanel() {
                                                 action3="Fixos"
                                                 add="Adicionar Categoria"
                                                 placeholder="Escolha uma categoria"
+                                                className={styles.drop}
                                             />
                                         </label>
-                                    </div>
+                
                                 </div>
-                                <div className={styles.pass}>
+                                
                                     <div className="mb-3">
-                                        <label htmlFor="exampleInputPassword1" className="form-label" id={styles.name}>
+                                        <label htmlFor="exampleInputPassword1" className={`form-label ${styles.input}`} id={styles.input}>
                                             <DropdownWithInput
-                                                title="Forma de pagamento"
+                                                title="Método de pagamento"
                                                 action1="Pix"
                                                 action2="Crédito"
                                                 action3="Débito"
-                                                add="Adicionar forma de pagamento"
-                                                placeholder="Escolha uma forma de pagamento"
+                                                add="Adicionar método de pagamento"
+                                                placeholder="Escolha uma método de pagamento"
                                                 onChange={handlePaymentTypeChange}
                                             />
                                         </label>
@@ -70,10 +108,10 @@ export default function AddPanel() {
 
                                 {isCreditSelected && (
                                     <div className={styles.pass}>
-                                        <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className="form-label" id={styles.name2}>
+                                        <div className="mb-3 mt-4">
+                                            <label htmlFor="exampleInputPassword1" className="form-label" style={{fontWeight: "bolder"}}>
                                                 Número de Parcelas
-                                                <input type="number" className="form-control mt-3" id="parcela" />
+                                                <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela" />
                                             </label>
                                         </div>
                                     </div>
@@ -84,7 +122,7 @@ export default function AddPanel() {
                                     <div className="mb-3">
                                         <label htmlFor="exampleInputPassword1" className="form-label" id={styles.name2}>
                                             Descrição
-                                            <input type="text" className="form-control mt-3" id="descricao" style={{height: '250px'}}/>
+                                            <input type="text" className={`form-control mt-3 ${styles.desc}`} id="descricao"/>
                                         </label>
                                     </div>
                                 </div>

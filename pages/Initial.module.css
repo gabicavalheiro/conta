@@ -20,7 +20,7 @@
     height: 300px;
     background-color: white;
     border-radius: 10px;
-    margin-left: 35px;
+    
 }
 
 .boxGrafic{
@@ -35,10 +35,11 @@
 .box{
     display: flex;
     justify-content: center;
-    width: 300px;
+    width: 350px;
     height: 300px;
     background-color: white;
     border-radius: 10px;
+    
 
 }
 .boxSaldo{
@@ -48,6 +49,8 @@
     height: 300px;
     background-color: white;
     border-radius: 10px;
+    
+    
 
 }
 
@@ -95,6 +98,53 @@
     opacity: 0; /* Inicialmente, o botão é invisível */
 }
 
+
+
+@media screen and (max-width: 590px) {
+    .section {
+        height: 120vh; /* Adjust the height for larger screens */
+    }
+
+
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        width: 100%; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    .boxSaldo,
+    .boxUltimas {
+        width: 200px;
+        margin-top: 20px;
+    }
+    
+}
+
 @media screen and (min-width: 600px) {
     .section {
         height: 150vh; /* Adjust the height for larger screens */
@@ -118,9 +168,103 @@
     .boxFuturos {
         margin-right: 0; /* Remove the right margin on larger screens */
     }
+
+    .boxGrafic,
+    .boxSaldo,
+    .boxTwo {
+        margin-right: 97px;
+    }
 }
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 600px) {
+    .section {
+        height: 350vh; /* Adjust the height for larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        width: 100%; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    .boxSaldo,
+    .boxUltimas {
+        width: 200px;
+        margin-top: 20px;
+    }
+    
+}
+
+ @media screen and (max-width: 770px) {
+    .section {
+        height: 250vh; /* Adjust the height for larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .box,
+    .boxFuturos {
+        width: 100%; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    .boxUltimas{
+        margin-top: 20px;
+    }
+
+}
+
+@media screen and (min-width: 941px) {
+    .section{
+        height: 170vh;
+    }
     /* Styles for screens with a maximum width of 599px */
     .box,
     .boxTwo,
@@ -149,3 +293,98 @@
         opacity: 1; /* Make the button visible on smaller screens */
     }
 }
+
+@media screen and (max-width: 970px){
+    .section {
+        height: 370vh; /* Adjust the height for larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        width: 100%; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .box{
+        width: 100%;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    
+    .boxUltimas{
+        margin-top: 20px;
+    }
+    
+}
+@media screen and (max-width: 1199px){
+    .section {
+        height: 290vh; /* Adjust the height for larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        width: 100%; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .box{
+        width: 100%;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    
+    .boxUltimas{
+        margin-top: 20px;
+    }
+    
+}
+
+
+
+

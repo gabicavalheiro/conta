@@ -7,6 +7,9 @@
     width: 700px;
     height: 970px;
     padding-top: 20px;
+    display: flex; /* Adicione a propriedade display */
+    flex-direction: column; /* Adicione a propriedade flex-direction */
+    align-items: center; /* Adicione a propriedade align-items */
 }
 
 .form{
@@ -15,18 +18,46 @@
 
 #name{
     font-weight: bolder;
-}
-
-
-.camp{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
     
 }
 
+.camp{
+    display: flex;
+    justify-content: center; /* Alinhe os campos ao centro */
+    padding-top: 30px;
+    gap: 28px;
+   
+    
+}
+
+
 .pass{
-    margin-bottom: 40px;
+    display: inline;
+    
+}
+
+.input{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.parce{
+    font-weight: bolder;
+}
+.parc{
+    width: 20px;
+    margin-bottom: 0;
+    font-weight: bolder;
+    width: 550px;
+}
+
+.desc{
+    height: 200px;
+}
+
+.inputName{
+    width: 250px
 }
 .button{
     display: flex;
@@ -59,7 +90,54 @@
 #name2{
     font-weight: bolder;
     width: 550px;
+    height: 250px;
 
 }
 
 
+@media screen and (max-width: 709px){
+    .box{
+        width: 100%;
+        height: 100%;
+        margin: 40px 50px;
+    }
+
+    .camp{
+        width: 200px;
+    }
+
+
+}
+
+@media screen and (max-width: 376px) {
+
+    .page{
+        height: 200vh;
+        width: 100%;
+    }
+
+    .camp,
+    #input {
+        margin: 0 30px;
+    }
+
+    .camp{
+        gap: 0
+    }
+    .box{
+        width: 300px;
+        height: 500px;
+    }
+
+    #input{
+        width: 200px;
+    }
+
+    #name2{
+        width: 200px;
+        height: 450px;;
+    }
+   
+
+
+}
