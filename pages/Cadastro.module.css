@@ -102,3 +102,41 @@
     text-decoration: none;
     color: black;
 }
+
+/* Cadastro.module.css */
+
+.infoIcon {
+    background-color: gray;
+    border: whitesmoke;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 5px;
+    margin-right: 130px;
+    cursor: pointer;
+    margin-left: 0;
+  }
+  
+  .infoIcon:hover {
+    background-color: darkgray;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .infoIcon:hover::before {
+    content: "Senha deve possuir:\aMin. 8 caracteres.\aLetras minúsculas.\aLetras maiúsculas.\aPelo menos um símbolo.\aPelo menos um número.";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9); /* Ajuste o valor do canal alfa para tornar menos transparente */
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    white-space: pre-line;
+    cursor: pointer;
+}
