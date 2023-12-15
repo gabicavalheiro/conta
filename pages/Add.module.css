@@ -3,7 +3,7 @@
 .section{
     background-color: rgba(218, 218, 218, 1);
     font-family: 'Montserrat', sans-serif;
-    height: auto;
+    height: 220vh;
 }
 .border{
     border-top: 1px solid rgba(0, 223, 191, 1);
@@ -25,3 +25,9 @@
     justify-content: center;
 }
 
+@media screen and (max-width: 590px){
+    .section{
+        width: 580px;
+       height: 250vh;
+    }
+}

@@ -1,19 +1,29 @@
 
+.page {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+}
 
-.box{
+.box {
     background-color: #ECE9EC;
     border-radius: 10px;    
-    margin: 40px 50px;
+    margin: 40px;
     width: 700px;
-    height: 970px;
-    padding-top: 20px;
+    height: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+    margin: 60px 50px;
     display: flex; /* Adicione a propriedade display */
     flex-direction: column; /* Adicione a propriedade flex-direction */
     align-items: center; /* Adicione a propriedade align-items */
-}
-
-.form{
-    margin: 60px 50px;
 }
 
 #name{
@@ -52,8 +62,12 @@
     width: 550px;
 }
 
-.desc{
+.descc{
     height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .inputName{
@@ -91,79 +105,86 @@
     font-weight: bolder;
     width: 550px;
     height: 250px;
+    display: flex;
+    justify-content: start;
 
 }
 
 
-@media screen and (max-width: 709px){
-    .box{
-        width: 100%;
-        height: 100%;
-        margin: 40px 50px;
+
+
+/* ... (seu código existente) ... */
+
+@media screen and (max-width: 1200px) {
+    .box {
+        width: 80%;
+        margin: 10px;
     }
 
-    .camp{
-        width: 200px;
+    .form {
+        margin: 20px 10px;
     }
-
 
 }
 
-@media screen and (max-width: 376px) {
-
-    .page{
-        height: 200vh;
+@media screen and (max-width: 600px) {
+   
+    .box {
         width: 100%;
     }
 
-    .form{
-        margin-top: 5px;
-        margin-bottom: 30px;
+    .form {
+        margin: 10px 5px;
     }
-
-    .camp,
-    #input {
-        margin: 0 30px;
+    
+    .parc{
+        width: 20px;
+        margin-bottom: 0;
+        font-weight: bolder;
+        width: 400px;
     }
-
-    .camp{
-        gap: 10px
+    
+    .descc{
+        height: 200px;
+        width: 400px;
     }
-
+    
     .inputName{
-     width: 100px;
+        width: 185px
     }
 
     .input{
-        width: 100px;
+        width: 400px;
     }
+}
 
-    .box{
-        width: 300px;
-        height: 700px;
-    }
-
-    .desc{
-        width: 200px;
-        height: 150px;
-        margin-left: 15px;
-    }
-
-    #input{
-        width: 200px;
-    }
-
-    #name2{
-        width: 200px;
-        height: 450px;;
-    }
-
-    .botoes{
-        display: flex;
-        justify-content: end;
-
-    }
+@media screen and (min-width: 600px) and  (max-width: 1200px) {
    
+    .box {
+        width: 100%;
+    }
 
+    .form {
+        margin: 10px 5px;
+    }
+    
+    .parc{
+        width: 20px;
+        margin-bottom: 0;
+        font-weight: bolder;
+        width: 400px;
+    }
+    
+    .descc{
+        height: 200px;
+        width: 400px;
+    }
+    
+    .inputName{
+        width: 185px
+    }
 
+    .input{
+        width: 400px;
+    }
 }

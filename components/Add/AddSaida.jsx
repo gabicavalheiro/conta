@@ -8,7 +8,7 @@ import AdicionarSaida from "@/pages/Adicionar-saida";
 import SwitchWithLocation from "../Swicth/SwitchWithLocation";
 
 
-export default function AddPanel() {
+export default function AddSaida() {
 
     const [isCreditSelected, setIsCreditSelected] = useState(false);
     const handlePaymentTypeChange = (value) => {
@@ -60,9 +60,9 @@ export default function AddPanel() {
 
                        
                         <DropdownButton 
-                        toggleText="Nova entrada" 
-                        action1Text="Nova saída" 
-                        action1href="/Adicionar-saida" 
+                        toggleText="Nova saída" 
+                        action1Text="Nova entrada" 
+                        action1href="/Adicionar-conta" 
                          />
                    
                 </div>
@@ -127,9 +127,9 @@ export default function AddPanel() {
 
                                     <div className={styles.pass}>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id={styles.name}>
+                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id={styles.name2}>
                                                 Descrição
-                                                <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" />
+                                                <input type="text" className={`form-control mt-3 ${styles.desc}`} id="descricao" />
                                             </label>
                                         </div>
                                     </div>

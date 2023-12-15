@@ -100,6 +100,51 @@
 
 
 
+@media screen and (max-width: 400px) {
+    .section {
+        height: 400vh; /* Adjust the height for larger screens */
+    }
+
+
+
+    .boxTwo,
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        width: 200px; /* Make these boxes full width on larger screens */
+        margin-left: 0; /* Remove the left margin on larger screens */
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxGrafic {
+        width: 100%; /* Make this box full width on larger screens */
+    }
+
+    .boxSaldo,
+    .boxUltimas,
+    .boxFuturos {
+        margin-right: 0; /* Remove the right margin on larger screens */
+    }
+
+    .boxTwo,
+    .boxSaldo,
+    .box {
+        margin-right: 97px;
+        margin-top: 20px;
+    }
+
+    .boxGrafic{
+        margin-top: 20px;
+    }
+
+    .boxSaldo,
+    .boxUltimas {
+        width: 200px;
+        margin-top: 20px;
+    }
+    
+}
+
 @media screen and (max-width: 590px) {
     .section {
         height: 120vh; /* Adjust the height for larger screens */
