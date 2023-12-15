@@ -1,11 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./Cadastro.module.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Link from "next/link";
 import { FaFacebook, FaApple, FaGoogle } from "react-icons/fa6";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { MdInfo } from 'react-icons/md';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { MdInfo, MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 export default function Cadastro() {
   const [formData, setFormData] = useState({
@@ -16,11 +16,12 @@ export default function Cadastro() {
   });
 
   const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     // Reset password error when the user types in the confirmation password field
-    if (e.target.name === 'segundaSenha') {
+    if (e.target.name === "segundaSenha") {
       setPasswordError(false);
     }
   };
@@ -35,27 +36,39 @@ export default function Cadastro() {
     }
 
     try {
-      const response = await fetch("https://api-conta-certa-production.up.railway.app/usuarios", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://api-conta-certa-production.up.railway.app/usuarios",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         console.log("Dados enviados com sucesso!");
-        toast.success('Cadastro realizado com sucesso!', { position: toast.POSITION.TOP_CENTER });
+        toast.success("Cadastro realizado com sucesso!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         setTimeout(() => {
           window.location.href = "/Login";
-        }, 3000);
+        }, 2000);
       } else {
-        console.error("Erro ao enviar os dados:", await response.text());
-        toast.error('Erro no cadastro. Por favor, tente novamente.', { position: toast.POSITION.TOP_CENTER });
+        console.error(
+          "Erro ao enviar os dados:",
+          await response.text()
+        );
+        toast.error("Erro no cadastro. Por favor, tente novamente.", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }
     } catch (error) {
       console.error("Erro durante a solicitação:", error);
-      toast.error('Erro no cadastro. Por favor, tente novamente.', { position: toast.POSITION.TOP_CENTER });
+      toast.error("Erro no cadastro. Por favor, tente novamente.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   };
 
@@ -97,7 +110,7 @@ export default function Cadastro() {
             </div>
             <div className="form-floating mb-3 position-relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="form-control"
                 id="floatingPassword"
                 placeholder="Sua senha"
@@ -106,31 +119,61 @@ export default function Cadastro() {
                 onChange={handleChange}
               />
               <label htmlFor="floatingPassword">Sua senha</label>
-              <div className="position-absolute top-50 translate-middle-y" style={{ right: '0.5rem' }}>
+              <div
+                className="position-absolute top-50 translate-middle-y"
+                style={{ right: "0.5rem" }}
+              >
+                <button
+                  type="button"
+                  className={`btn ${styles.showHideButton}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    cursor: "pointer",
+                    background: "rgba(0, 0, 0, 0)",
+                    border: "none",
+                    marginRight: "-0.3rem", // Espaçamento entre os botões
+                  }}
+                >
+                  {showPassword ? (
+                    <MdVisibilityOff style={{ color: "grey" }} />
+                  ) : (
+                    <MdVisibility style={{ color: "grey" }} />
+                  )}
+                </button>
                 <button
                   type="button"
                   className={`btn ${styles.infoIcon}`}
                   id="infoIcon"
                   onClick={() => setInfoIconActive(!infoIconActive)}
-                  style={{ cursor: 'default', background: 'rgba(0, 0, 0, 0)' }}
+                  style={{
+                    cursor: "default",
+                    background: "rgba(0, 0, 0, 0)",
+                    border: "none",
+                  }}
                 >
-                  <MdInfo />
+                  <MdInfo style={{ color: "grey" }} />
                 </button>
               </div>
             </div>
             <div className="form-floating mb-3 position-relative">
               <input
                 type="password"
-                className={`form-control ${passwordError ? styles.errorInput : ''}`}
+                className={`form-control ${
+                  passwordError ? styles.errorInput : ""
+                }`}
                 id="floatingSecondPassword"
                 placeholder="Confirme sua senha"
                 name="segundaSenha"
                 value={formData.segundaSenha}
                 onChange={handleChange}
               />
-              <label htmlFor="floatingSecondPassword">Confirme sua senha</label>
+              <label htmlFor="floatingSecondPassword">
+                Confirme sua senha
+              </label>
               {passwordError && (
-                <div className={`text-danger ${styles.errorText}`}>As senhas não coincidem.</div>
+                <div className={`text-danger ${styles.errorText}`}>
+                  As senhas não coincidem.
+                </div>
               )}
             </div>
             <div className={styles.buttonBox}>
