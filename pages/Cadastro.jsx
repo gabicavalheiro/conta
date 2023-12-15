@@ -7,21 +7,33 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MdInfo } from 'react-icons/md';
 
-
 export default function Cadastro() {
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
     senha: "",
+    segundaSenha: "",
   });
+
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Reset password error when the user types in the confirmation password field
+    if (e.target.name === 'segundaSenha') {
+      setPasswordError(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Check if passwords match
+    if (formData.senha !== formData.segundaSenha) {
+      setPasswordError(true);
+      return; // Don't proceed with submission if there's a password error
+    }
+
     try {
       const response = await fetch("https://api-conta-certa-production.up.railway.app/usuarios", {
         method: "POST",
@@ -30,28 +42,22 @@ export default function Cadastro() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         console.log("Dados enviados com sucesso!");
-        // Exibe a notificação de sucesso
         toast.success('Cadastro realizado com sucesso!', { position: toast.POSITION.TOP_CENTER });
-  
-        // Redireciona para a página de login após 3 segundos
         setTimeout(() => {
           window.location.href = "/Login";
         }, 3000);
       } else {
         console.error("Erro ao enviar os dados:", await response.text());
-        // Exibe a notificação de erro
         toast.error('Erro no cadastro. Por favor, tente novamente.', { position: toast.POSITION.TOP_CENTER });
       }
     } catch (error) {
       console.error("Erro durante a solicitação:", error);
-      // Exibe a notificação de erro
       toast.error('Erro no cadastro. Por favor, tente novamente.', { position: toast.POSITION.TOP_CENTER });
     }
   };
-  
 
   const [infoIconActive, setInfoIconActive] = useState(false);
 
@@ -90,44 +96,53 @@ export default function Cadastro() {
               <label htmlFor="floatingEmail">E-mail</label>
             </div>
             <div className="form-floating mb-3 position-relative">
-  <input
-    type="password"
-    className="form-control"
-    id="floatingPassword"
-    placeholder="Sua senha" 
-    name="senha"
-    value={formData.senha}
-    onChange={handleChange}
-  />
-  <label htmlFor="floatingPassword">Sua senha</label>
-
-  {/* Botão dentro do campo de senha */}
-  <div className="position-absolute top-50 translate-middle-y" style={{ right: '-7.5rem' }}>
-  <button
-  type="button"
-  className={`btn btn-dark ${styles.infoIcon}`}
-  id="infoIcon"
-  onClick={() => setInfoIconActive(!infoIconActive)}
-  style={{ cursor: 'default' }}
->
-  <MdInfo />
-</button>
-
-
-  </div>
-  
-</div>
-
+              <input
+                type="password"
+                className="form-control"
+                id="floatingPassword"
+                placeholder="Sua senha"
+                name="senha"
+                value={formData.senha}
+                onChange={handleChange}
+              />
+              <label htmlFor="floatingPassword">Sua senha</label>
+              <div className="position-absolute top-50 translate-middle-y" style={{ right: '0.5rem' }}>
+                <button
+                  type="button"
+                  className={`btn ${styles.infoIcon}`}
+                  id="infoIcon"
+                  onClick={() => setInfoIconActive(!infoIconActive)}
+                  style={{ cursor: 'default', background: 'rgba(0, 0, 0, 0)' }}
+                >
+                  <MdInfo />
+                </button>
+              </div>
+            </div>
+            <div className="form-floating mb-3 position-relative">
+              <input
+                type="password"
+                className={`form-control ${passwordError ? styles.errorInput : ''}`}
+                id="floatingSecondPassword"
+                placeholder="Confirme sua senha"
+                name="segundaSenha"
+                value={formData.segundaSenha}
+                onChange={handleChange}
+              />
+              <label htmlFor="floatingSecondPassword">Confirme sua senha</label>
+              {passwordError && (
+                <div className={`text-danger ${styles.errorText}`}>As senhas não coincidem.</div>
+              )}
+            </div>
             <div className={styles.buttonBox}>
-        <button type="submit" className={styles.button}>
-          Criar conta
-        </button>
-        <button className={styles.buttonCancelar}>
-          <Link href="/" className={styles.botaoCancel}>
-            Cancelar
-          </Link>
-        </button>
-      </div>
+              <button type="submit" className={styles.button}>
+                Criar conta
+              </button>
+              <button className={styles.buttonCancelar}>
+                <Link href="/" className={styles.botaoCancel}>
+                  Cancelar
+                </Link>
+              </button>
+            </div>
           </form>
           <ToastContainer />
           <div className={styles.boxA}>
