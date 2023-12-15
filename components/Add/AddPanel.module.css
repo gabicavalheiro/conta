@@ -116,17 +116,37 @@
         width: 100%;
     }
 
+    .form{
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+
     .camp,
     #input {
         margin: 0 30px;
     }
 
     .camp{
-        gap: 0
+        gap: 10px
     }
+
+    .inputName{
+     width: 100px;
+    }
+
+    .input{
+        width: 100px;
+    }
+
     .box{
         width: 300px;
-        height: 500px;
+        height: 700px;
+    }
+
+    .desc{
+        width: 200px;
+        height: 150px;
+        margin-left: 15px;
     }
 
     #input{
@@ -136,6 +156,12 @@
     #name2{
         width: 200px;
         height: 450px;;
+    }
+
+    .botoes{
+        display: flex;
+        justify-content: end;
+
     }
    
 

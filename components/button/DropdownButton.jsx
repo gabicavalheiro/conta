@@ -1,22 +1,31 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import styles from './Dropdown.module.css'
-import Link from "next/link";
 
-export default function DropdownButton({toggleText, action1Text, action2Text}) {
-  return (
+export default function DropdownButton({ toggleText, action1Text, action2Text, action1href, action2href, toggleHref }) {
+
+ return (
     <Dropdown>
-      <Link href="/Add">
+      
         <Dropdown.Toggle id="dropdown-basic" className={styles.box}>
           {toggleText}
         </Dropdown.Toggle>
-      </Link>
+      
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">{action1Text}</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">{action2Text}</Dropdown.Item>
+        <Link to={action1href}>
+          <Dropdown.Item>
+            <Nav.Link>{action1Text}</Nav.Link>
+          </Dropdown.Item>
+        </Link>
+
+        <Link to={action2href}>
+          <Dropdown.Item>
+            <Nav.Link>{action2Text}</Nav.Link>
+          </Dropdown.Item>
+        </Link>
       </Dropdown.Menu>
     </Dropdown>
-  );
+ );
 }
