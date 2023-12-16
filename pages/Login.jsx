@@ -59,7 +59,7 @@ const loginPage = () => {
           </div>
 
           <div className={styles.buttonBox}>
-            <Link href="/Initial">
+            <Link href="/Home#">
             <button className={styles.button}>Entrar</button>
             </Link>
             <button className={styles.buttonCancelar}>
