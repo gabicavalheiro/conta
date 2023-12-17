@@ -111,6 +111,33 @@
 
 }
 
+/* AddPanel.module.css */
+
+/* Adicione estilos para o fundo embaçado (blur) */
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Cor de fundo semi-transparente */
+    backdrop-filter: blur(5px); /* Efeito de blur */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilos para o contêiner do CardConfirm */
+  .card-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  /* Outros estilos necessários para o CardConfirm */
+  
+
 
 
 

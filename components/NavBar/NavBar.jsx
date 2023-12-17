@@ -9,7 +9,7 @@ export default function NavBar() {
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid float-left">
           <div className={styles.margin_left}>
-            <Link className="navbar-brand" href="#">
+            <Link className="navbar-brand" href="/">
               <img
                 src="../logoVerde.png"
                 alt="Logo"
