@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import styles from './AddPanel.module.css'
-import DropdownButton from '../button/DropdownButton';
-import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
 import { useForm } from "react-hook-form"
+import { useState } from 'react';
+import styles from './AddPanel.module.css'
+import DropdownButton from '../button/DropdownButton';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
 
 export default function AddPanel() {
 
@@ -15,33 +18,66 @@ export default function AddPanel() {
 
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
-          num_parcelas:0,
-          usuario_id: 21,
-          //metodo:"Pix"
+            num_parcelas: 0,
+            usuario_id: 21,
+            // metodo: "Pix"
         }
-      });
+    });
 
-      async function enviaDados(data) {
-       
+    async function enviaDados(data) {
+        MySwal.fire({
+            title: 'Confirmação',
+            text: 'Deseja enviar essa conta?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            confirmButtonColor: '#009C86',
+            cancelButtonText: 'Não',
+            iconColor: '#009C86'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
 
-        data.categoria = selectedCategory;
-        data.metodo = selectedPaymentMethod;
-        const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas",
-          {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ ...data })
-          },
-        )
-        const dados = await response.json()
+                data.categoria = selectedCategory;
+                data.metodo = selectedPaymentMethod;
 
-        if (response.status == 201) {
-          reset()
-        } else {
-          console.log(dados);
-      
-        }
-      }
+                const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas", {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({ ...data })
+                });
+
+                const dados = await response.json();
+
+                if (response.status === 201) {
+                    reset();
+                    // Chame a função passada por propriedade para lidar com o envio
+                    enviaDados();
+                    // Exibir notificação de sucesso
+                    MySwal.fire(
+                        {
+                        title: 'Sucesso',
+                        text: 'Conta cadastrada com sucesso!.',
+                        icon: 'success',
+                        iconColor: '#009C86',
+                        confirmButtonText: 'Voltar', // Texto personalizado para o botão de confirmação
+                        confirmButtonColor: '#009C86'
+                        }
+                    );
+                } else {
+                    console.error(dados);
+                    // Exibir notificação de erro
+                    MySwal.fire({
+                        title: 'Erro',
+                        text: 'Erro ao enviar o formulário. Por favor, tente novamente.',
+                        icon: 'error',
+                        iconColor: '#009C86',
+                        confirmButtonText: 'Voltar', // Texto personalizado para o botão de confirmação
+                        confirmButtonColor: '#009C86'
+                    });
+                }
+            }
+        });
+    }
 
     const [isCreditSelected, setIsCreditSelected] = useState(false);
 
@@ -51,9 +87,6 @@ export default function AddPanel() {
         setSelectedPaymentMethod(value);
     };
 
-
-
-    
     return (
         <section className={styles.page}>
             <>
@@ -77,7 +110,7 @@ export default function AddPanel() {
                                     <div className={styles.camp}>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}    >Data</label>
-                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  required   {...register("data")}/>
+                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp" required   {...register("data")} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
@@ -121,7 +154,7 @@ export default function AddPanel() {
                                             <div className="mb-3 mt-4">
                                                 <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }}>
                                                     Número de Parcelas
-                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
+                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")} />
                                                 </label>
                                             </div>
                                         </div>
@@ -151,8 +184,8 @@ export default function AddPanel() {
                         </div>
                     </section>
                 </div>
-              
-        </>
+
+            </>
         </section >
     )
 }
