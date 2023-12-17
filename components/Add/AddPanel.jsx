@@ -12,15 +12,26 @@ const MySwal = withReactContent(Swal);
 
 export default function AddPanel() {
 
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+  
+
+    useEffect(() => {
+        if (usuarioId) {
+          console.log('Usuário ID ass painel:', usuarioId);
+        }
+      }, [usuarioId]);
+    
+
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
 
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
-            num_parcelas: 0,
-            usuario_id: 21,
-            // metodo: "Pix"
+          num_parcelas:0,
+          usuario_id: usuarioId,
+          //metodo:"Pix"
         }
     });
 

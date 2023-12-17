@@ -11,11 +11,39 @@ import Proximos from "@/components/Grafic/Proximos";
 import Futuras from "@/components/Grafic/Futuras";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
+<<<<<<< HEAD
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+=======
+import { useRouter } from 'next/router';
+//import { useEffect } from "react";
 
-
+>>>>>>> final_graficos
 
 export default function () {
-  
+  const router = useRouter();
+  const usuarioId = router.query.usuarioId;
+<<<<<<< HEAD
+
+
+
+  useEffect(() => {
+    if (usuarioId) {
+      console.log('Usuário ID:', usuarioId);
+      // Lógica adicional que depende de usuarioId
+    }
+  }, [usuarioId]);
+=======
+console.log(usuarioId);
+
+
+  //useEffect(() => {
+   // if (usuarioId) {
+   //   console.log('Usuário ID:', usuarioId);
+      // Lógica adicional que depende de usuarioId
+  //  }
+  //}, [usuarioId]);
+>>>>>>> final_graficos
 
   return (
     <section className={styles.section}>
@@ -70,7 +98,7 @@ export default function () {
             </div>
             </div>.
 
-            <FloatingButton/>
+            <FloatingButton   usuarioId={usuarioId}/>
           </div>
           </div>
         </div>

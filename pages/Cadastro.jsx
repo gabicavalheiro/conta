@@ -17,6 +17,8 @@ export default function Cadastro() {
 
   const [passwordError, setPasswordError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [infoIconActive, setInfoIconActive] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -71,8 +73,6 @@ export default function Cadastro() {
       });
     }
   };
-
-  const [infoIconActive, setInfoIconActive] = useState(false);
 
   return (
     <section className={styles.section} id="contato">
@@ -149,6 +149,7 @@ export default function Cadastro() {
                     cursor: "default",
                     background: "rgba(0, 0, 0, 0)",
                     border: "none",
+                    marginLeft: "0.2rem", // Espaçamento entre os botões
                   }}
                 >
                   <MdInfo style={{ color: "grey" }} />
@@ -157,7 +158,7 @@ export default function Cadastro() {
             </div>
             <div className="form-floating mb-3 position-relative">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 className={`form-control ${
                   passwordError ? styles.errorInput : ""
                 }`}
@@ -170,6 +171,28 @@ export default function Cadastro() {
               <label htmlFor="floatingSecondPassword">
                 Confirme sua senha
               </label>
+              <div
+                className="position-absolute top-50 translate-middle-y"
+                style={{ right: "0.5rem" }}
+              >
+                <button
+                  type="button"
+                  className={`btn ${styles.showHideButton}`}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  style={{
+                    cursor: "pointer",
+                    background: "rgba(0, 0, 0, 0)",
+                    border: "none",
+                    marginRight: "-0.3rem", // Espaçamento entre os botões
+                  }}
+                >
+                  {showConfirmPassword ? (
+                    <MdVisibilityOff style={{ color: "grey" }} />
+                  ) : (
+                    <MdVisibility style={{ color: "grey" }} />
+                  )}
+                </button>
+              </div>
               {passwordError && (
                 <div className={`text-danger ${styles.errorText}`}>
                   As senhas não coincidem.

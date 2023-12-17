@@ -41,8 +41,8 @@ export default function NavBar() {
           <div className={styles.margin_right}>
             <div className="collapse navbar-collapse float-end" id="navbarNav">
               <ul className="navbar-nav">
-                <li className="nav-item" href="/Home">
-                  <Link className="nav-link" href="/Home">
+                <li className="nav-item" href="/">
+                  <Link className="nav-link" href="/">
                     <div className={styles.bold}>
                       <div className={styles.icon}>
                         <BsArrowLeftCircleFill />
