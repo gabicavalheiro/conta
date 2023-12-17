@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
-import SwitchWithLocation from "../Swicth/SwitchWithLocation";
 
 
 export default function AddPanel() {
@@ -58,13 +57,13 @@ export default function AddPanel() {
 
                 <div className={styles.button}>
 
-                       
-                        <DropdownButton 
-                        toggleText="Nova entrada" 
-                        action1Text="Nova saída" 
-                        action1href="/Adicionar-saida" 
-                         />
-                   
+
+                    <DropdownButton
+                        toggleText="Nova entrada"
+                        action1Text="Nova saída"
+                        action1href="/Adicionar-saida"
+                    />
+
                 </div>
 
                 <div className={styles.box}>
@@ -136,16 +135,20 @@ export default function AddPanel() {
 
 
                                     <div className={styles.botoes}>
-                                        <button type="submit" className={styles.botao_enviar}>Confirmar</button>
-                                        <button type="submit" className={styles.botao_cancel}>Cancelar</button>
+                                        <button type="button" className={styles.botao_enviar} onClick={handleSubmit}>
+                                            Confirmar
+                                        </button>
+                                        <button type="button" className={styles.botao_cancel}>
+                                            Cancelar
+                                        </button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </section>
                 </div>
-
-            </>
-        </section>
+              
+        </>
+        </section >
     )
 }

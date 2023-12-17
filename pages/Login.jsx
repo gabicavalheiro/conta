@@ -94,12 +94,7 @@ const loginPage = () => {
 
           <div className={styles.boxA}>
             <div className={styles.access}>
-              <h1>Acessar com:</h1>
-              <div className={styles.icons}>
-                <FaFacebook />
-                <FaGoogle />
-                <FaApple />
-              </div>
+              
               <div className={styles.cadas}>
                 <h1>
                   Não possui uma conta ainda?{" "}
