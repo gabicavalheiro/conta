@@ -3,24 +3,46 @@ import styles from "./login.module.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Link from "next/link";
 import { FaFacebook, FaApple, FaGoogle } from "react-icons/fa6";
-import React, { useState,useContext } from 'react';
-
-import { AuthContext } from "@/components/contexts/auth";
+import React from 'react';
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { useState } from "react";
 
 const loginPage = () => {
 
-  // const {authenticated,login} = useContext(AuthContext)
-  const [email,setEmail] = useState("")
-  const [password,setPassword] = useState("")
+  const { register, handleSubmit } = useForm()
+  const [usuarioNome, setUsuarioNome] = useState('');
+  const [usuarioId, setUsuarioId] = useState('');
 
-  const handleSubmit = (e) =>{
-    e.preventDefault()
+  const router = useRouter()
+
+  async function verificaLogin(data) {
+    
+    
+        const response = await fetch("https://api-conta-certa-production.up.railway.app/login",
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({email: data.email, senha: data.senha})
+          },
+        )
+        
+        if (response.status == 400) {
+          alert("Não está cadastrado")
+          
+        } else {
+           
+          const usuarioData = await response.json()
+          setUsuarioId(usuarioData.id)
+          setUsuarioNome(usuarioData.nome)
+          
+          
 
 
-    console.log("submit",{email,password})
+          router.push("/Home#")
+        }
+      }
 
-    login(email,password)
-  }
 
 
   return (
@@ -30,6 +52,7 @@ const loginPage = () => {
           <img src="./logoBranco.png" alt="logo" width={200} height={200} />
         </Link>
       </div>
+      <form  onSubmit={handleSubmit(verificaLogin)}>
       <div className={styles.box}>
         <div className={styles.form}>
           <div className="form-floating mb-3">
@@ -38,8 +61,8 @@ const loginPage = () => {
               className="form-control"
               id="email" //floatingInputDisabled
               placeholder="name@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+             
+              required {...register("email")} 
               
             />
             <label htmlFor="floatingInputDisabled">E-mail</label>
@@ -51,17 +74,16 @@ const loginPage = () => {
               className="form-control"
               id="password"
               placeholder="name@example.com"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              required {...register("senha")} 
               
             />
             <label htmlFor="floatingInputDisabled">Senha</label>
           </div>
 
           <div className={styles.buttonBox}>
-            <Link href="/Home#">
-            <button className={styles.button}>Entrar</button>
-            </Link>
+          
+            <button className={styles.button}  type="submit" >Entrar</button>
+
             <button className={styles.buttonCancelar}>
               {" "}
               <Link href="/" className={styles.link}>
@@ -88,8 +110,11 @@ const loginPage = () => {
               </div>
             </div>
           </div>
+          
         </div>
+        
       </div>
+      </form>
     </section>
   );
 }
