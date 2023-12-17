@@ -3,17 +3,16 @@ import styles from "./login.module.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Link from "next/link";
 import { FaFacebook, FaApple, FaGoogle } from "react-icons/fa6";
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useRouter } from 'next/router';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
-const loginPage = () => {
+const LoginPage = () => {
   const { register, handleSubmit } = useForm();
-  const [usuarioNome, setUsuarioNome] = useState('');
-  const [usuarioId, setUsuarioId] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -28,8 +27,6 @@ const loginPage = () => {
       toast.error("Não está cadastrado", { position: toast.POSITION.TOP_CENTER });
     } else {
       const usuarioData = await response.json();
-      setUsuarioId(usuarioData.id);
-      setUsuarioNome(usuarioData.nome);
 
       // Check if login is successful before redirecting
       if (usuarioData.id && usuarioData.nome) {
@@ -50,7 +47,7 @@ const loginPage = () => {
       <form onSubmit={handleSubmit(verificaLogin)}>
         <div className={styles.box}>
           <div className={styles.form}>
-            <div className="form-floating mb-3">
+            <div className="form-floating mb-3 position-relative">
               <input
                 type="email"
                 className="form-control"
@@ -60,16 +57,37 @@ const loginPage = () => {
               />
               <label htmlFor="floatingInputDisabled">E-mail</label>
             </div>
-            <div className="form-floating mb-3">
+            <div className="form-floating mb-3 position-relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 className="form-control"
                 id="password"
-                placeholder="name@example.com"
+                placeholder="Digite sua senha"
                 required {...register("senha")}
               />
               <label htmlFor="floatingInputDisabled">Senha</label>
+              <div
+                className="position-absolute top-50 translate-middle-y"
+                style={{ right: "0.5rem" }}
+              >
+                <button
+                  type="button"
+                  className={`btn ${styles.showHideButton}`}
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    cursor: "pointer",
+                    background: "rgba(0, 0, 0, 0)",
+                    border: "none",
+                  }}
+                >
+                  {showPassword ? (
+                    <MdVisibilityOff style={{ color: "grey" }} />
+                  ) : (
+                    <MdVisibility style={{ color: "grey" }} />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className={styles.buttonBox}>
@@ -108,4 +126,4 @@ const loginPage = () => {
   );
 }
 
-export default loginPage;
+export default LoginPage;
