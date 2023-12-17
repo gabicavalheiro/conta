@@ -53,7 +53,7 @@ export default function AddPanel() {
 
 
 
-
+    
     return (
         <section className={styles.page}>
             <>
