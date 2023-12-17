@@ -6,8 +6,23 @@ import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
 import { useForm } from "react-hook-form"
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+
+
 
 export default function AddPanel() {
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+  
+
+    useEffect(() => {
+        if (usuarioId) {
+          console.log('Usuário ID ass painel:', usuarioId);
+        }
+      }, [usuarioId]);
+    
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -16,7 +31,7 @@ export default function AddPanel() {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
           num_parcelas:0,
-          usuario_id: 21,
+          usuario_id: usuarioId,
           //metodo:"Pix"
         }
       });
