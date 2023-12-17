@@ -11,11 +11,13 @@ import Proximos from "@/components/Grafic/Proximos";
 import Futuras from "@/components/Grafic/Futuras";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
-
+import { useRouter } from 'next/router';
 
 
 export default function () {
-  
+  const router = useRouter();
+  const usuarioId = router.query.usuarioId;
+  console.log(usuarioId);
 
   return (
     <section className={styles.section}>

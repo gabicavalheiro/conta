@@ -39,7 +39,11 @@ const loginPage = () => {
           
 
 
-          router.push("/Home#")
+          router.push({
+            pathname: '/Home',
+            hash: '#',
+            query: { usuarioId: usuarioData.id },
+          });
         }
       }
 
