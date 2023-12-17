@@ -35,7 +35,7 @@ const loginPage = () => {
       if (usuarioData.id && usuarioData.nome) {
         router.push("/Home#");
       } else {
-        toast.error("Erro no login", { position: toast.POSITION.TOP_CENTER });
+        toast.error("Verifique se digitou os dados corretamente", { position: toast.POSITION.TOP_CENTER });
       }
     }
   }
