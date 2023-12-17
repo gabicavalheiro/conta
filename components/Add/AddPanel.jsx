@@ -5,52 +5,55 @@ import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
-
+import { useForm } from "react-hook-form"
 
 export default function AddPanel() {
 
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+
+
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+          num_parcelas:0,
+          usuario_id: 21,
+          //metodo:"Pix"
+        }
+      });
+
+      async function enviaDados(data) {
+       
+
+        data.categoria = selectedCategory;
+        data.metodo = selectedPaymentMethod;
+        const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas",
+          {
+            method: "POST",
+            headers: { "Content-type": "application/json" },
+            body: JSON.stringify({ ...data })
+          },
+        )
+        const dados = await response.json()
+
+        if (response.status == 201) {
+          reset()
+        } else {
+          console.log(dados);
+      
+        }
+      }
+
     const [isCreditSelected, setIsCreditSelected] = useState(false);
+
+
+
     const handlePaymentTypeChange = (value) => {
-        setIsCreditSelected(value === "Crédito");
+        setSelectedPaymentMethod(value);
     };
 
-    function handleSubmit(event) {
-        event.preventDefault();
 
-        // Pegar os valores dos campos do formulário
-        const data = document.getElementById('data').value;
-        const valor = document.getElementById('valor').value;
-        const categoria = document.getElementById('categoria').value;
-        const metodo = document.getElementById('formaDePagamento').value;
-        const numeroDeParcelas = document.getElementById('parcela').value;
-        const descricao = document.getElementById('descricao').value;
 
-        // Criar um objeto para armazenar os dados
-        const dados = {
-            data,
-            valor,
-            categoria,
-            metodo,
-            numeroDeParcelas,
-            descricao
-        };
 
-        // Enviar os dados para o servidor (por exemplo, usando a API Fetch)
-        fetch('http://api-conta-certa-production.up.railway.app/saidas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dados)
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Dados enviados com sucesso:', data);
-            })
-            .catch((error) => {
-                console.error('Erro ao enviar os dados:', error);
-            });
-    }
     return (
         <section className={styles.page}>
             <>
@@ -69,16 +72,16 @@ export default function AddPanel() {
                 <div className={styles.box}>
                     <section>
                         <div className={styles.form}>
-                            <form>
+                            <form onSubmit={handleSubmit(enviaDados)}>
                                 <div className={styles.form}>
                                     <div className={styles.camp}>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Data</label>
-                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp" />
+                                            <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}    >Data</label>
+                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  required   {...register("data")}/>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
-                                            <input type="email" className={`form-control ${styles.inputName}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Valor" />
+                                            <input type="number" className={`form-control ${styles.inputName}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Valor" required   {...register("valor")} />
                                         </div>
                                     </div>
                                     <div className={styles.pass}>
@@ -92,6 +95,7 @@ export default function AddPanel() {
                                                     add="Adicionar Categoria"
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
+                                                    onChange={(selectedValue) => setSelectedCategory(selectedValue)}
                                                 />
                                             </label>
 
@@ -117,7 +121,7 @@ export default function AddPanel() {
                                             <div className="mb-3 mt-4">
                                                 <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }}>
                                                     Número de Parcelas
-                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela" />
+                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
                                                 </label>
                                             </div>
                                         </div>
@@ -128,14 +132,14 @@ export default function AddPanel() {
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id={styles.name}>
                                                 Descrição
-                                                <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" />
+                                                <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao"   {...register("descricao")} />
                                             </label>
                                         </div>
                                     </div>
 
 
                                     <div className={styles.botoes}>
-                                        <button type="button" className={styles.botao_enviar} onClick={handleSubmit}>
+                                        <button type="submit" className={styles.botao_enviar} >
                                             Confirmar
                                         </button>
                                         <button type="button" className={styles.botao_cancel}>
