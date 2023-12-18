@@ -12,10 +12,125 @@
 }
 
 .table tbody tr td {
-    padding-left: 45px; /* Ajuste o valor conforme necessário */
+    padding-right: 40px;
+    padding-left: 40px;
 
 }
 
 .button{
    margin-left: 200px;
+}
+
+
+
+.btn{
+    background-color: #dadada;
+    border: 1px solid #dadada;
+    padding: 5px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 50%;
+    margin-bottom: 20px;
+    position: absolute;
+    right: 150px;
+    top: 50px; 
+}
+
+
+.date{
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 15px;
+    margin-left: 5px;
+}
+
+.datepickcon{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box {
+    width: 600px;
+    height: 700px;
+    background-color: #ece9ec;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 70px;
+    border-radius: 15px;
+    position: relative;
+  }
+
+.select {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    top: 30px; 
+    width: 100%; 
+  }
+  
+.a{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 45px;
+    top: 160px; 
+}
+.boxx{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    
+}
+
+.box_entrada {
+    width: 140px;
+    height: 70px;
+    background-color: #4DE475;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+.box_saida {
+    width: 140px;
+    height: 70px;
+    background-color: #F94144;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+
+}
+
+.box_saldo {
+    width: 140px;
+    height: 70px;
+    background-color: #00DFBF;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+
+
+
 }

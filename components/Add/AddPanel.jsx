@@ -129,7 +129,7 @@ export default function AddPanel() {
                 <DropdownButton
                         toggleText="Nova entrada"
                         action1Text="Nova saída"
-                        action1href={`/Adicionar-entrada?userId=${usuarioId}`}
+                        action1href={`/Adicionar-saida?usuarioId=${usuarioId}`}
                     />
 
                 </div>
