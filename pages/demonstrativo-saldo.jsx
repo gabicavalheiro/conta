@@ -4,6 +4,12 @@ import NavBar from "@/components/NavBar/NavBar";
 import ApiButton from "@/components/button/selectDateButton";
 import Table from "@/components/table/tableSaldo";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
+
+export default function demonstrativoSaldo() {
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+=======
 import { useEffect } from "react";
 
 export default function demonstrativoSaldo() {
@@ -20,6 +26,7 @@ export default function demonstrativoSaldo() {
     }, [usuarioId]);
 
 
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
     return (
 
         <section className={styles.section}>
@@ -32,7 +39,7 @@ export default function demonstrativoSaldo() {
                     <div className={styles.select}>
                         <ApiButton />
                     </div>
-                    
+
                     <div className={styles.a}>
                         <div className={styles.boxx}>
                             <div className={styles.box_entrada}>Entradas</div>

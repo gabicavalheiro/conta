@@ -41,7 +41,14 @@ console.log(usuarioId);
           <div className="row">
             <div className="col">
               <div className={styles.boxSaldo}>
+<<<<<<< HEAD
+                <Saldo />
+                <div className={styles.aaa}>
+                <Link href={`/demonstrativo-saldo?usuarioId=${usuarioId}`}> <i class={`bi bi-search ${styles.icon}`}></i></Link>
+                </div>
+=======
                 <Saldo usuarioId={usuarioId}/>
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
               </div>
             </div>
             <div className="col">

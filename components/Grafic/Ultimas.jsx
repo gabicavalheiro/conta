@@ -56,6 +56,8 @@ function Ultimas() {
         fetchData();
     }, [usuarioId]);
 
+    console.log(proximosDados, "oi");
+
     useEffect(() => {
         if (chartRef.current) {
             const ctx = chartRef.current.getContext('2d');
