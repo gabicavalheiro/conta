@@ -24,7 +24,7 @@ function Categoria() {
           return;
         }
 
-        const response = await fetch(`https://api-conta-certa-production.up.railway.app/graphSaidas/${usuarioId}?mes=11&ano=2023`);
+        const response = await fetch(`https://api-conta-certa-production.up.railway.app/graphSaidas/${usuarioId}?mes=12&ano=2023`);
         
         if (!response.ok) {
           // Se a resposta não estiver ok, trate o erro aqui

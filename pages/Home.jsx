@@ -12,6 +12,7 @@ import Futuras from "@/components/Grafic/Futuras";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
 import { useRouter } from 'next/router';
+import { useEffect } from "react";
 //import { useEffect } from "react";
 
 
@@ -21,12 +22,12 @@ export default function () {
 console.log(usuarioId);
 
 
-  //useEffect(() => {
-   // if (usuarioId) {
-   //   console.log('Usuário ID:', usuarioId);
-      // Lógica adicional que depende de usuarioId
-  //  }
-  //}, [usuarioId]);
+  useEffect(() => {
+    if (usuarioId) {
+      console.log('Usuário ID:', usuarioId);
+       
+    }
+  }, [usuarioId]);
 
   return (
     <section className={styles.section}>
