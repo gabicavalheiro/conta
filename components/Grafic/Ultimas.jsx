@@ -1,25 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styles from './Ultimas.module.css';
+import Chart from 'chart.js/auto';
+import axios from 'axios';
+import { format } from "date-fns";
+import { ptBR } from 'date-fns/locale';
 
 function Ultimas() {
     const [indiceAtual, setIndiceAtual] = useState(0);
-
-    const dadosDaTabela = [
-        { col1: "Fornecedor X", col2: "16/ago", col3: "PIX", col4: "R$700,00" },
-        { col1: "Fornecedor Y", col2: "16/ago", col3: "PIX", col4: "R$800,00" },
-        { col1: "Fornecedor Z", col2: "16/ago", col3: "Débito", col4: "R$900,00" },
-        { col1: "Fornecedor X", col2: "15/ago", col3: "A vista", col4: "R$800,00" },
-        { col1: "Fornecedor Y", col2: "15/ago", col3: "Débito", col4: "R$600,00" }
-        ];
+    const [apiData, setApiData] = useState([]);
 
     const tamanhoPagina = 4;
 
-    const proximosDados = dadosDaTabela.slice(indiceAtual, indiceAtual + tamanhoPagina);
+    const proximosDados = apiData.slice(indiceAtual, indiceAtual + tamanhoPagina);
 
     const handleClickProximo = () => {
-        if (indiceAtual + tamanhoPagina < dadosDaTabela.length) {
+        if (indiceAtual + tamanhoPagina < apiData.length) {
             setIndiceAtual(indiceAtual + tamanhoPagina);
         }
     };
@@ -29,6 +26,62 @@ function Ultimas() {
             setIndiceAtual(indiceAtual - tamanhoPagina);
         }
     };
+
+    const chartRef = useRef();
+    const myChart = useRef(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://api-conta-certa-production.up.railway.app/graphpassadas/21?mes=12&ano=2023');
+                setApiData(response.data.map(entry => ({
+                    ...entry,
+                    descricao: entry.descricao ? entry.descricao.charAt(0).toUpperCase() + entry.descricao.slice(1) : 'Aleatórios',
+                })));
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const ctx = chartRef.current.getContext('2d');
+
+        if (myChart.current) {
+            myChart.current.destroy();
+        }
+
+        const data = {
+            labels: proximosDados.map(entry => entry.descricao),
+            datasets: [{
+                label: 'My First Dataset',
+                data: proximosDados.map(entry => parseFloat(entry.valor.replace("R$", "").replace(",", "."))),
+                backgroundColor: [
+                    'rgba(0, 223, 191, 1)',
+                    'rgba(25, 119, 243, 1)',
+                    'rgba(0, 156, 134, 1)',
+                    'rgba(255, 99, 132, 1)',
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                },
+            },
+        };
+
+        myChart.current = new Chart(ctx, config);
+    }, [proximosDados]);
 
     return (
         <div className="container">
@@ -48,28 +101,29 @@ function Ultimas() {
                 <tbody>
                     {proximosDados.map((linha, index) => (
                         <tr key={index}>
-                            <td>{linha.col1}</td>
-                            <td>{linha.col2}</td>
-                            <td>{linha.col3}</td>
-                            <td><strong>{linha.col4}</strong></td>
+                            <td>{linha.descricao}</td>
+                            <td>{format(new Date(linha.data), 'MMMM/yyyy', { locale: ptBR })}</td>
+                            <td>{linha.metodo}</td>
+                            <td><strong>R$ {linha.valor}</strong></td>
                         </tr>
                     ))}
                     <tr>
                         <td colSpan="4">
                             {indiceAtual > 0 && (
                                 <button className={styles.button} onClick={handleClickAnterior}>
-                                    <i className="bi bi-arrow-up-short"></i> 
+                                    <i className="bi bi-arrow-up-short"></i>
                                 </button>
                             )}
-                            {indiceAtual + tamanhoPagina < dadosDaTabela.length && (
+                            {indiceAtual + tamanhoPagina < apiData.length && (
                                 <button className={styles.button} onClick={handleClickProximo}>
-                                    <i className="bi bi-arrow-down-short"></i> 
+                                    <i className="bi bi-arrow-down-short"></i>
                                 </button>
                             )}
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <canvas ref={chartRef} style={{ width: '300px', height: '300px', padding: '50px' }}></canvas>
         </div>
     );
 }
