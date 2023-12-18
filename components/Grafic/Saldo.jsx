@@ -4,57 +4,41 @@ import 'chartjs-plugin-datalabels';
 import { useRouter } from 'next/router';
 
 export default function Saldo() {
-
   const router = useRouter();
   const usuarioId = router.query.usuarioId;
 
   const chartRef = useRef();
   const myChart = useRef(null);
-  const [entradaData, setEntradaData] = useState([]);
-  const [saidaData, setSaidaData] = useState([]);
+  const [entradaData, setEntradaData] = useState(0);
+  const [saidaData, setSaidaData] = useState(0);
 
   useEffect(() => {
-    if (usuarioId) {
-      console.log('Usuário ID:', usuarioId);
-      // Lógica adicional que depende de usuarioId
-    }
-    
-    
-    async function getDadosGrafico() {
+    const getDadosGrafico = async () => {
       try {
         if (!usuarioId) {
-         
           return;
         }
 
-        const response = await fetch(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=12&ano=2023`);
-        const response2 = await fetch(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=12&ano=2023`);
-        
-        if (!response.ok) {
-          
-          console.error('Erro ao obter dados:', response.statusText);
+        const responseEntradas = await fetch(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=12&ano=2023`);
+        const responseSaidas = await fetch(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=12&ano=2023`);
+
+        if (!responseEntradas.ok || !responseSaidas.ok) {
+          console.error('Erro ao obter dados da API');
           return;
         }
 
-        const dados = await response.json();
-        const dados2 = await response2.json()
-        
-       // console.log(dados);
-        setEntradaData(Number(dados[0]?.total) || 0);
-        setSaidaData(Number(dados2[0]?.total) || 0);
+        const dadosEntradas = await responseEntradas.json();
+        const dadosSaidas = await responseSaidas.json();
+
+        setEntradaData(Number(dadosEntradas[0]?.total) || 0);
+        setSaidaData(Number(dadosSaidas[0]?.total) || 0);
       } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
       }
-    }
+    };
 
     getDadosGrafico();
   }, [usuarioId]);
-
-
-
-
-  
-
 
   useEffect(() => {
     const saldoData = entradaData - saidaData;
@@ -105,7 +89,7 @@ export default function Saldo() {
 
   return (
     <div>
-      <canvas ref={chartRef} style={{ width: '400px', height: '300px', padding: '20px', fontWeight:'800' }}></canvas>
+      <canvas ref={chartRef} style={{ width: '400px', height: '300px', padding: '20px', fontWeight: '800' }}></canvas>
     </div>
   );
 }
