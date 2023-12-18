@@ -31,17 +31,7 @@ export default function demonstrativoSaldo() {
             <div className={styles.div}>
                 <div className={styles.box}>
 
-                    <div className={styles.select}>
-                        <ApiButton />
-                    </div>
-
-                    <div className={styles.a}>
-                        <div className={styles.boxx}>
-                            <div className={styles.box_entrada}>Entradas</div>
-                            <div className={styles.box_saida}>Saídas</div>
-                            <div className={styles.box_saldo}>Saldo</div>
-                        </div>
-                    </div>
+                    
                     <div className={styles.table}>
                         <Table usuarioId={usuarioId}/>
                     </div>
