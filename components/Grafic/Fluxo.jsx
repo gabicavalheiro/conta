@@ -4,79 +4,72 @@ import { format, addMonths } from 'date-fns';
 import { useRouter } from 'next/router';
 
 export default function Fluxo() {
-  const chartRef = useRef();
+  const chartRef = useRef(null); // Inicialize com null
   const myChart = useRef(null);
-
   const router = useRouter();
   const usuarioId = router.query.usuarioId;
 
-
-
   useEffect(() => {
     if (usuarioId) {
-     
-       
+      // Lógica adicional se necessário com usuarioId
     }
   }, [usuarioId]);
 
   useEffect(() => {
-
-
-    
-  
-
-
-
-
     const fetchData = async () => {
-      const apiData = await fetch('http://localhost:54168/saldoAnual/2?ano=2023').then((response) => response.json());
+      try {
+        const apiData = await fetch(`https://api-conta-certa-production.up.railway.app/saldoAnual/${usuarioId}?ano=2023`).then((response) => response.json());
+        
+        const labels = apiData.map((item) => item.nomeMes);
+        const data = apiData.map((item) => item.saldoLiquido);
 
-     
-      const labels = apiData.map((item) => item.nomeMes);
-      const data = apiData.map((item) => item.saldoLiquido);
+        const ctx = chartRef.current?.getContext('2d'); // Use '?.' para evitar erros se chartRef.current for nulo
 
-      const ctx = chartRef.current.getContext('2d');
+        if (ctx) {
+          if (myChart.current) {
+            myChart.current.destroy();
+          }
 
-      if (myChart.current) {
-        myChart.current.destroy();
-      }
-
-      myChart.current = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Saldo Liquido',
-              data: data,
-              fill: false,
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1,
+          myChart.current = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: 'Saldo Liquido',
+                  data: data,
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1,
+                },
+              ],
             },
-          ],
-        },
-        options: {
-          indexAxis: 'y',
-          plugins: {
-            legend: {
-              display: false,
-            },
-            datalabels: {
-              display: true,
-              color: 'black',
-              anchor: 'end',
-              align: 'end',
-              font: {
-                weight: 'bold',
+            options: {
+              indexAxis: 'y',
+              plugins: {
+                legend: {
+                  display: false,
+                },
+                datalabels: {
+                  display: true,
+                  color: 'black',
+                  anchor: 'end',
+                  align: 'end',
+                  font: {
+                    weight: 'bold',
+                  },
+                },
               },
             },
-          },
-        },
-      });
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();
-  }, []);
+  }, [usuarioId]); // Adicione usuarioId como dependência se necessário
 
   return (
     <div>
