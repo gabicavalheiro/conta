@@ -28,7 +28,6 @@ const LoginPage = () => {
     } else {
       const usuarioData = await response.json();
 
-<<<<<<< HEAD
       // Check if login is successful before redirecting
       if (usuarioData.id && usuarioData.nome) {
         router.push({
@@ -37,13 +36,6 @@ const LoginPage = () => {
         });
       } else {
         toast.error("Verifique se digitou os dados corretamente", { position: toast.POSITION.TOP_CENTER });
-=======
-          router.push({
-            pathname: '/Home',
-            query: { usuarioId: usuarioData.id },
-          });
-        }
->>>>>>> final_graficos
       }
     }
   }

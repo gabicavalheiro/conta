@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { InputGroup, DropdownButton, Dropdown, FormControl } from "react-bootstrap";
 import styles from './DropdownInput.module.css'
 
-function DropdownWithInput({ title, action1, action2, action3, add, placeholder, onChange }) {
+function DropdownWithInput({ title, action1, action2, action3, action4, add, placeholder, onChange }) {
  const [selectedValue, setSelectedValue] = useState(title);
  const [inputValue, setInputValue] = useState("");
 
@@ -34,6 +34,9 @@ function DropdownWithInput({ title, action1, action2, action3, add, placeholder,
         </Dropdown.Item>
         <Dropdown.Item onClick={() =>handleDropdownItemSelect(action3)}>
           {action3}
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() =>handleDropdownItemSelect(action4)}>
+          {action4}
         </Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={() =>handleDropdownItemSelect(add)}>
