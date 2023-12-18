@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { ptBR } from 'date-fns/locale';
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -12,6 +12,10 @@ function Table() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [dadosDaTabela, setDadosDaTabela] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [totalEntradas, setTotalEntradas] = useState(0);
+    const [totalSaidas, setTotalSaidas] = useState(0);
+    const [saldo, setSaldo] = useState(0);
+
 
     const router = useRouter();
     const usuarioId = router.query.usuarioId;
@@ -29,9 +33,29 @@ function Table() {
         const fetchData = async () => {
             try {
                 const formattedDate = format(selectedDate, 'MM-yyyy');
-                const response = await fetch(`https://api-conta-certa-production.up.railway.app/saidasMesIndex/${usuarioId}1?mes=1&ano=2023`);
+                const arr = formattedDate.split("-")
+                const mes  = arr[0]
+                const ano = arr[1]
+                
+
+                
+                const response = await fetch(`https://api-conta-certa-production.up.railway.app/saidasMesIndex/${usuarioId}?mes=${mes}&ano=${ano}`);
+                const responseSaidas = await fetch(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=${mes}&ano=${ano}`);
+                const responseEntradas = await fetch(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=${mes}&ano=${ano}`);
+                                       
                 const data = await response.json();
-                // Organizar os dados por descrição
+                const entradasData  = await  responseEntradas.json();
+                const saidasData  = await  responseSaidas.json();
+
+
+                const totalSaidas = saidasData[0]?.total || 0;
+                const totalEntradas = entradasData[0]?.total || 0;
+                const saldo = totalEntradas - totalSaidas;
+                
+                setTotalEntradas(totalEntradas)
+                setTotalSaidas(totalSaidas)
+                setSaldo(saldo)
+
                 const dadosOrdenados = data.sort((a, b) => a.descricao.localeCompare(b.descricao));
                 setDadosDaTabela(dadosOrdenados);
             } catch (error) {
@@ -73,9 +97,9 @@ function Table() {
 
                 <div className={styles.a}>
                         <div className={styles.boxx}>
-                            <div className={styles.box_entrada}>Entradas</div>
-                            <div className={styles.box_saida}>Saídas</div>
-                            <div className={styles.box_saldo}>Saldo</div>
+                        <div className={styles.box_entrada}>Entradas: R$ {totalEntradas}</div>
+                        <div className={styles.box_saida}>Saídas: R$ {totalSaidas}</div>
+                        <div className={styles.box_saldo}>Saldo: R$ {saldo}</div>
                         </div>
                     </div>
 
