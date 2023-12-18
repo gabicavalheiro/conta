@@ -13,6 +13,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
 import { useRouter } from 'next/router';
 import { useEffect } from "react";
+import Link from "next/link";
 //import { useEffect } from "react";
 
 
@@ -40,6 +41,9 @@ console.log(usuarioId);
             <div className="col">
               <div className={styles.boxSaldo}>
                 <Saldo />
+                <div className={styles.aaa}>
+                <Link href="/demonstrativo-saldo"> <i class={`bi bi-search ${styles.icon}`}></i></Link>
+                </div>
               </div>
             </div>
             <div className="col">

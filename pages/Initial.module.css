@@ -98,7 +98,15 @@
     opacity: 0; /* Inicialmente, o botão é invisível */
 }
 
-
+.icon{
+    color: #dadada;
+    margin-top: 40px;
+}
+.aaa{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
 
 @media screen and (max-width: 400px) {
     .section {

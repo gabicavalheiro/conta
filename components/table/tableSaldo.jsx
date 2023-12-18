@@ -2,19 +2,31 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styles from "./tableSaldo.module.css";
+import { useEffect } from "react";
 
 function Table() {
     const [indiceAtual, setIndiceAtual] = useState(0);
-
-    const dadosDaTabela = [
-        { col1: "Água", col2: "18/ago", col3: "R$700,00"  },
-        { col1: "Aluguel", col2: "18/ago", col3: "R$900,00" },
-        { col1: "Luz", col2: "19/ago", col3: "R$600,00" },
-        { col1: "Lixo", col2: "20/ago", col3: "R$100,00"},
-        { col1: "Limpeza", col2: "20/ago", col3: "R$300,00"}
-    ];
+    const [dadosDaTabela, setDadosDaTabela] = useState([]);
 
     const tamanhoPagina = 4;
+
+    useEffect(() => {
+        // Função para buscar dados da API
+        const fetchData = async () => {
+            try {
+                const response = await fetch("https://api-conta-certa-production.up.railway.app/graphproximos/21?mes=11&ano=2023");
+                const data = await response.json();
+                // Organizar os dados por descrição
+                const dadosOrdenados = data.sort((a, b) => a.descricao.localeCompare(b.descricao));
+                setDadosDaTabela(dadosOrdenados);
+            } catch (error) {
+                console.error("Erro ao buscar dados da API", error);
+            }
+        };
+
+        // Chamar a função para buscar dados ao carregar o componente
+        fetchData();
+    }, []);
 
     const proximosDados = dadosDaTabela.slice(indiceAtual, indiceAtual + tamanhoPagina);
 
@@ -34,20 +46,7 @@ function Table() {
         <div className="container">
             <div className={styles.table}>
             <table className="table">
-                <thead>
-                    <tr>
-                        <th colSpan="4" className="text-center">
-                            <h1 style={{
-                                fontSize: '14px',
-                                marginTop: '20px',
-                                marginBottom: '20px',
-                                fontWeight: '800',
-                                display: 'flex',
-                                justifyContent: 'center'
-                            }}>Próximos vencimentos</h1>
-                        </th>
-                    </tr>
-                </thead>
+            
                 <tbody>
                     {proximosDados.map((linha, index) => (
                         <tr key={index} className="ml-3" >
