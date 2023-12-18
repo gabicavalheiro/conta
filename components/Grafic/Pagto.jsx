@@ -10,15 +10,17 @@ function Pagto() {
 
 
   const router = useRouter();
-  const usuarioId = router.query.usuarioId;  
+  const usuarioId = router.query.usuarioId;
+
 
 
 
   useEffect(() => {
     if (usuarioId) {
-    //  console.log('Usuário ID:', usuarioId);
-      
+      console.log('Usuário ID:', usuarioId);
+      // Lógica adicional que depende de usuarioId
     }
+    
     
     async function getDadosGrafico() {
       try {
@@ -27,8 +29,8 @@ function Pagto() {
           return;
         }
 
-        const response = await fetch(`http://localhost:54168/graphMetodoValorData/1?mes=11&ano=2023`);
-        const response2 = await fetch(`http://localhost:54168/graphValorParcela/1?mes=11&ano=2023`);
+        const response = await fetch(`https://api-conta-certa-production.up.railway.app/graphMetodoValorData/${usuarioId}?mes=11&ano=2023`);
+        const response2 = await fetch(`https://api-conta-certa-production.up.railway.app/graphValorParcela/${usuarioId}?mes=11&ano=2023`);
         
         if (!response.ok) {
           
@@ -59,8 +61,8 @@ function Pagto() {
   
   
 
-  const a = dadosDoBanco2[0].total_parcela;
-  console.log(a,"oi");
+  //const a = dadosDoBanco2[0].total_parcela;
+  
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 
