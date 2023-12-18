@@ -3,8 +3,11 @@ import styles from './demosntartivo-saldo.module.css'
 import NavBar from "@/components/NavBar/NavBar";
 import ApiButton from "@/components/button/selectDateButton";
 import Table from "@/components/table/tableSaldo";
+import { useRouter } from "next/router";
 
 export default function demonstrativoSaldo() {
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
     return (
 
         <section className={styles.section}>
@@ -17,7 +20,7 @@ export default function demonstrativoSaldo() {
                     <div className={styles.select}>
                         <ApiButton />
                     </div>
-                    
+
                     <div className={styles.a}>
                         <div className={styles.boxx}>
                             <div className={styles.box_entrada}>Entradas</div>
@@ -26,7 +29,7 @@ export default function demonstrativoSaldo() {
                         </div>
                     </div>
                     <div className={styles.table}>
-                        <Table />
+                        <Table usuarioId={usuarioId}/>
                     </div>
                 </div>
             </div>

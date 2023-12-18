@@ -23,14 +23,14 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
     const router = useRouter();
     const usuarioId = router.query.usuarioId;
-  
+
 
     useEffect(() => {
         if (usuarioId) {
-          console.log('Usuário ID ass painel:', usuarioId);
+            console.log('Usuário ID ass painel:', usuarioId);
         }
-      }, [usuarioId]);
-    
+    }, [usuarioId]);
+
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -38,84 +38,76 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
-          num_parcelas:0,
-          usuario_id: usuarioId,
-          //metodo:"Pix"
+            num_parcelas: 0,
+            usuario_id: usuarioId,
+            //metodo:"Pix"
         }
-      });
+    });
 
-      async function enviaDados(data) {
-       
+    async function enviaDados(data) {
+
 
         data.categoria = selectedCategory;
         data.metodo = selectedPaymentMethod;
         const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas",
-          {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ ...data })
-          },
+            {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({ ...data })
+            },
         )
         const dados = await response.json()
 
         if (response.status == 201) {
-          reset()
+            reset()
         } else {
-          console.log(dados);
-      
+            console.log(dados);
+
         }
-      }
+    }
 
     const [isCreditSelected, setIsCreditSelected] = useState(false);
 
 
 
-    const handlePaymentTypeChange = (value) => {
-        setSelectedPaymentMethod(value);
+   
+};
+
+const handleSubmit = async (event) => {
+
+    event.preventDefault();
+
+    const data = document.getElementById('data').value;
+    const valor = document.getElementById('valor').value;
+    const categoria = document.getElementById('categoria').value;
+    const metodo = document.getElementById('metodo').value;
+    const descricao = document.getElementById('descricao').value;
+
+
+    const dados = {
+        data,
+        valor,
+        categoria,
+        metodo,
+        num_parcelas,
+        descricao
     };
 
+    MySwal.fire({
+        title: 'Confirmação',
+        text: 'Deseja enviar essa conta?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        confirmButtonColor: '#009C86',
+        cancelButtonText: 'Não',
+        iconColor: '#009C86'
 
-
-    
-        setIsCreditSelected(value === "Crédito");
-        num_parcelas = document.getElementById('parcela').value;
-    };
-
-    const handleSubmit = async (event) => {
-
-        event.preventDefault();
-
-        const data = document.getElementById('data').value;
-        const valor = document.getElementById('valor').value;
-        const categoria = document.getElementById('categoria').value;
-        const metodo = document.getElementById('metodo').value;
-        const descricao = document.getElementById('descricao').value;
-
-
-        const dados = {
-            data,
-            valor,
-            categoria,
-            metodo,
-            num_parcelas,
-            descricao
-        };
-
-        MySwal.fire({
-            title: 'Confirmação',
-            text: 'Deseja enviar essa conta?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Sim',
-            confirmButtonColor: '#009C86',
-            cancelButtonText: 'Não',
-            iconColor: '#009C86'
-            
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Enviar os dados para o servidor (por exemplo, usando a API Fetch)
-                async function confirm(){
-                 fetch('http://api-conta-certa-production.up.railway.app/saidas', {
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Enviar os dados para o servidor (por exemplo, usando a API Fetch)
+            async function confirm() {
+                fetch('http://api-conta-certa-production.up.railway.app/saidas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -140,14 +132,14 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                             icon: 'error',
                             iconColor: '#009C86',
                             confirmButtonText: 'Voltar', // Texto personalizado para o botão de confirmação
-                            confirmButtonColor: '#009C86',                            
+                            confirmButtonColor: '#009C86',
                         });
                     });
-                }
             }
+        }
 
-        });
-    }
+    });
+
 
 
     return (
@@ -173,7 +165,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                     <div className={styles.camp}>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}    >Data</label>
-                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  required   {...register("data")}/>
+                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp" required   {...register("data")} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
@@ -183,7 +175,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
-                                            <input type="number" className={`form-control ${styles.inputName}`} id="valor" aria-describedby="emailHelp" placeholder="Valor" required/>
+                                            <input type="number" className={`form-control ${styles.inputName}`} id="valor" aria-describedby="emailHelp" placeholder="Valor" required />
                                         </div>
                                     </div>
                                     <div className={styles.pass}>
@@ -215,7 +207,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                                     placeholder="Escolha uma método de pagamento"
                                                     onChange={handlePaymentTypeChange}
                                                     id="metodo"
-    
+
                                                 />
                                             </label>
                                         </div>
@@ -226,7 +218,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                             <div className="mb-3 mt-4">
                                                 <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }} id="parcela">
                                                     Número de Parcelas
-                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
+                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")} />
                                                     <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela" required />
                                                 </label>
                                             </div>
@@ -236,10 +228,10 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
                                     <div className={styles.pass}>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`}  id="descricao" >
+                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id="descricao" >
                                                 Descrição
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao"   {...register("descricao")} />
-                                                <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" required/>
+                                                <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" required />
                                             </label>
                                         </div>
                                     </div>
@@ -260,8 +252,8 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                         </div>
                     </section>
                 </div>
-              
-        </>
+
+            </>
         </section >
     )
-
+}

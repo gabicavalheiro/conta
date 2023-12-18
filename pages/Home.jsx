@@ -42,7 +42,7 @@ console.log(usuarioId);
               <div className={styles.boxSaldo}>
                 <Saldo />
                 <div className={styles.aaa}>
-                <Link href="/demonstrativo-saldo"> <i class={`bi bi-search ${styles.icon}`}></i></Link>
+                <Link href={`/demonstrativo-saldo?usuarioId=${usuarioId}`}> <i class={`bi bi-search ${styles.icon}`}></i></Link>
                 </div>
               </div>
             </div>
