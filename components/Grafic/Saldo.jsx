@@ -1,12 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Chart from 'chart.js/auto';
-import 'chartjs-plugin-datalabels';
+import React, { useState, useEffect } from "react";
+import { format } from "date-fns";
+import { ptBR } from 'date-fns/locale';
 import { useRouter } from 'next/router';
+import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import styles from './Ultimas.module.css';
 
-export default function Saldo() {
+function Proximos() {
+    const [indiceAtual, setIndiceAtual] = useState(0);
+    const [dadosDaTabela, setDadosDaTabela] = useState([]);
+    const router = useRouter();
+    const { usuarioId } = router.query;
 
-  const router = useRouter();
-  const usuarioId = router.query.usuarioId;
+    const tamanhoPagina = 4;
 
   const chartRef = useRef();
   const myChart = useRef(null);
@@ -95,17 +101,67 @@ export default function Saldo() {
             font: {
               weight: 'bold'
             }
-          }
+        };
+
+        // Chamar a função para buscar dados ao carregar o componente
+        fetchData();
+    }, [usuarioId]);
+
+    const proximosDados = dadosDaTabela.slice(indiceAtual, indiceAtual + tamanhoPagina);
+
+    const handleClickProximo = () => {
+        if (indiceAtual + tamanhoPagina < dadosDaTabela.length) {
+            setIndiceAtual(indiceAtual + tamanhoPagina);
         }
-      }
     };
 
-    myChart.current = new Chart(ctx, config);
-  }, [entradaData, saidaData]);
+    const handleClickAnterior = () => {
+        if (indiceAtual - tamanhoPagina >= 0) {
+            setIndiceAtual(indiceAtual - tamanhoPagina);
+        }
+    };
 
-  return (
-    <div>
-      <canvas ref={chartRef} style={{ width: '400px', height: '300px', padding: '20px', fontWeight:'800' }}></canvas>
-    </div>
-  );
+    return (
+        <div className="container">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th colSpan="3" className="text-center">
+                            <h1 style={{
+                                fontSize: '14px',
+                                marginTop: '20px',
+                                marginBottom: '20px',
+                                fontWeight: '800',
+                            }}>Próximos vencimentos</h1>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {proximosDados.map((linha, index) => (
+                        <tr key={index}>
+                            <td>{linha.descricao.charAt(0).toUpperCase() + linha.descricao.slice(1)}</td>
+                            <td>{format(new Date(linha.data), 'MMMM/yyyy', { locale: ptBR })}</td>
+                            <td><strong>R$ {linha.valor}</strong></td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan="3">
+                            {indiceAtual > 0 && (
+                                <button className={styles.button} onClick={handleClickAnterior}>
+                                    <i className="bi bi-arrow-up-short"></i>
+                                </button>
+                            )}
+                            {indiceAtual + tamanhoPagina < dadosDaTabela.length && (
+                                <button className={styles.button} onClick={handleClickProximo}>
+                                    <i className="bi bi-arrow-down-short"></i>
+                                </button>
+                            )}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    );
 }
+
+export default Proximos;

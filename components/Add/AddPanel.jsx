@@ -1,36 +1,27 @@
-import React, { useState } from "react";
-import styles from './AddPanel.module.css'
-import DropdownButton from '../button/DropdownButton';
-import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-
-import Swal from 'sweetalert2'
+import { useEffect, useState } from 'react';
+import styles from './AddPanel.module.css'
+import DropdownButton from '../button/DropdownButton';
+import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { useRouter } from 'next/router';
 
 const MySwal = withReactContent(Swal);
 
-
-
-export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancelarClick }) {
-
-    let num_parcelas;
-
+export default function AddPanel() {
 
     const router = useRouter();
     const usuarioId = router.query.usuarioId;
-  
+
 
     useEffect(() => {
         if (usuarioId) {
           console.log('Usuário ID ass painel:', usuarioId);
         }
       }, [usuarioId]);
-    
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -38,45 +29,78 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
-          num_parcelas:0,
-          usuario_id: usuarioId,
-          //metodo:"Pix"
+            num_parcelas: 0,
+            usuario_id: 21,
+            // metodo: "Pix"
         }
-      });
+    });
 
-      async function enviaDados(data) {
-       
+    async function enviaDados(data) {
+        MySwal.fire({
+            title: 'Confirmação',
+            text: 'Deseja enviar essa conta?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            confirmButtonColor: '#009C86',
+            cancelButtonText: 'Não',
+            iconColor: '#009C86'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
 
-        data.categoria = selectedCategory;
-        data.metodo = selectedPaymentMethod;
-        const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas",
-          {
-            method: "POST",
-            headers: { "Content-type": "application/json" },
-            body: JSON.stringify({ ...data })
-          },
-        )
-        const dados = await response.json()
+                data.categoria = selectedCategory;
+                data.metodo = selectedPaymentMethod;
 
-        if (response.status == 201) {
-          reset()
-        } else {
-          console.log(dados);
-      
-        }
-      }
+                const response = await fetch("https://api-conta-certa-production.up.railway.app/entradas", {
+                    method: "POST",
+                    headers: { "Content-type": "application/json" },
+                    body: JSON.stringify({ ...data })
+                });
+
+                const dados = await response.json();
+
+                if (response.status === 201) {
+                    reset();
+                    // Chame a função passada por propriedade para lidar com o envio
+                    enviaDados();
+                    // Exibir notificação de sucesso
+                    MySwal.fire(
+                        {
+                        title: 'Sucesso',
+                        text: 'Conta cadastrada com sucesso!.',
+                        icon: 'success',
+                        iconColor: '#009C86',
+                        confirmButtonText: 'Voltar', // Texto personalizado para o botão de confirmação
+                        confirmButtonColor: '#009C86'
+                        }
+                    );
+                } else {
+                    console.error(dados);
+                    // Exibir notificação de erro
+                    MySwal.fire({
+                        title: 'Erro',
+                        text: 'Erro ao enviar o formulário. Por favor, tente novamente.',
+                        icon: 'error',
+                        iconColor: '#009C86',
+                        confirmButtonText: 'Voltar', // Texto personalizado para o botão de confirmação
+                        confirmButtonColor: '#009C86'
+                    });
+                }
+            }
+        });
+    }
 
     const [isCreditSelected, setIsCreditSelected] = useState(false);
 
-
-
     const handlePaymentTypeChange = (value) => {
-        setSelectedPaymentMethod(value);
+        setIsCreditSelected(value === "Crédito");
     };
 
 
-
     
+
+   
+
     return (
         <section className={styles.page}>
             <>
@@ -84,10 +108,10 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                 <div className={styles.button}>
 
 
-                    <DropdownButton
+                <DropdownButton
                         toggleText="Nova entrada"
                         action1Text="Nova saída"
-                        action1href="/Adicionar-saida"
+                        action1href={`/Adicionar-entrada?userId=${usuarioId}`}
                     />
 
                 </div>
@@ -100,7 +124,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                     <div className={styles.camp}>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}    >Data</label>
-                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  required   {...register("data")}/>
+                                            <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp" required   {...register("data")} />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
@@ -109,13 +133,13 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                     </div>
                                     <div className={styles.pass}>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.input}`} id="categoria" aria-required>
+                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.input}`} id={styles.input} >
                                                 <DropdownWithInput
                                                     title="Categoria"
                                                     action1="Administrativo"
                                                     action2="Financeiro"
                                                     action3="Fixos"
-                                                    add="Adicionar Categoria"
+                                                    add="Outro"
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
                                                     onChange={(selectedValue) => setSelectedCategory(selectedValue)}
@@ -125,17 +149,16 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                         </div>
 
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.input}`} id="metodo" aria-required >
+                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.input}`} id={styles.input}>
                                                 <DropdownWithInput
                                                     title="Método de pagamento"
                                                     action1="Pix"
                                                     action2="Crédito"
                                                     action3="Débito"
-                                                    add="Adicionar método de pagamento"
+                                                    action4="Dinheiro"
+                                                    add="Outro"
                                                     placeholder="Escolha uma método de pagamento"
                                                     onChange={handlePaymentTypeChange}
-                                                    id="metodo"
-    
                                                 />
                                             </label>
                                         </div>
@@ -144,9 +167,9 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                     {isCreditSelected && (
                                         <div className={styles.pass}>
                                             <div className="mb-3 mt-4">
-                                                <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }} id="parcela">
+                                                <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }}>
                                                     Número de Parcelas
-                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
+                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")} />
                                                 </label>
                                             </div>
                                         </div>
@@ -155,7 +178,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
                                     <div className={styles.pass}>
                                         <div className="mb-3">
-                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`}  id="descricao" >
+                                            <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id={styles.name}>
                                                 Descrição
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao"   {...register("descricao")} />
                                             </label>
@@ -176,11 +199,8 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                         </div>
                     </section>
                 </div>
-              
-        </>
+
+            </>
         </section >
     )
-<<<<<<< Updated upstream
 }
-=======
->>>>>>> Stashed changes

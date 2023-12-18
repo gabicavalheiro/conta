@@ -71,6 +71,10 @@
     width: 550px;
 }
 
+.desc{
+    font-weight: bolder;
+}
+
 .inputName{
     width: 250px
 }
