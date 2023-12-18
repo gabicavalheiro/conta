@@ -180,4 +180,7 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
         </>
         </section >
     )
+<<<<<<< Updated upstream
 }
+=======
+>>>>>>> Stashed changes
