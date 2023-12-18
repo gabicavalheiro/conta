@@ -61,7 +61,7 @@ function Proximos() {
                 <tbody>
                     {proximosDados.map((linha, index) => (
                         <tr key={index}>
-                            <td>{linha.descricao}</td>
+                            <td>{linha.descricao.charAt(0).toUpperCase() + linha.descricao.slice(1)}</td>
                             <td>{format(new Date(linha.data), 'MMMM/yyyy', { locale: ptBR })}</td>
                             <td><strong>R$ {linha.valor}</strong></td>
                         </tr>
