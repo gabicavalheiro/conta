@@ -1,0 +1,14 @@
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    height: 50px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgba(218, 218, 218, 1);
+}
+
+.icon{
+    color: black;
+}

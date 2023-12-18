@@ -1,0 +1,21 @@
+.button{
+    font-size: 25px;
+    border: none;
+    background-color: white;
+}
+
+.table{
+    padding: 5px;
+    border: 1px solid white;
+    border-radius: 15px;
+    background-color: white;
+}
+
+.table tbody tr td {
+    padding-left: 75px; /* Ajuste o valor conforme necessário */
+}
+
+#button{
+   margin-right: 20px;
+   margin-left: 175px;
+}
