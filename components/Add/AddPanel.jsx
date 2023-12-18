@@ -108,15 +108,21 @@ export default function AddPanel() {
           confirmButtonColor: '#009C86',
 
           preConfirm: (newCategory) => {
-            // Handle the new category
+      
             console.log('Nova categoria:', newCategory);
-            // You can add additional logic here, e.g., send the new category to the server
+  
             setSelectedCategory(newCategory);
           },
         });
       };
     
-
+      const handleCancelar = () => {
+        
+        router.push({
+            pathname: '/Home',
+            query: { usuarioId},
+          });
+      };
    
 
     return (
@@ -208,7 +214,7 @@ export default function AddPanel() {
                                         <button type="submit" className={styles.botao_enviar} >
                                             Confirmar
                                         </button>
-                                        <button type="button" className={styles.botao_cancel}>
+                                        <button type="button" className={styles.botao_cancel} onClick={handleCancelar}>
                                             Cancelar
                                         </button>
                                     </div>
