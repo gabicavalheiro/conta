@@ -6,8 +6,25 @@ import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { format } from "date-fns";
 import { ptBR } from 'date-fns/locale';
+import { useRouter } from "next/router";
 
 function Ultimas() {
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+
+  
+  
+    useEffect(() => {
+      if (usuarioId) {
+        console.log('Usuário ID:', usuarioId);
+         
+      }
+    }, [usuarioId]);
+
+
+
+
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [apiData, setApiData] = useState([]);
     const [exibirGrafico, setExibirGrafico] = useState(true);
@@ -31,10 +48,13 @@ function Ultimas() {
     const chartRef = useRef();
     const myChart = useRef(null);
 
+   const url =  await  `https://api-conta-certa-production.up.railway.app/graphpassadas/${usuarioId}?mes=11&ano=2023`
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://api-conta-certa-production.up.railway.app/graphpassadas/21?mes=12&ano=2023');
+                const response = await axios.get(url);
                 setApiData(response.data.map(entry => ({
                     ...entry,
                     descricao: entry.descricao ? entry.descricao.charAt(0).toUpperCase() + entry.descricao.slice(1) : 'Aleatórios',

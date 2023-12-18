@@ -46,12 +46,12 @@ console.log(usuarioId);
             </div>
             <div className="col">
               <div className={styles.boxTwo}>
-                <Pagto />
+                <Pagto usuarioId={usuarioId} />
               </div>
             </div>
             <div className="col ms-0">
               <div className={styles.box}>
-                <Categoria/>
+                <Categoria usuarioId={usuarioId}/>
               </div>
             </div>
           </div>
@@ -59,12 +59,12 @@ console.log(usuarioId);
           <div className="row">
             <div className="col">
               <div className={styles.boxSaldo}>
-                <Fluxo/>
+                <Fluxo usuarioId={usuarioId}/>
               </div>
             </div>
             <div className="col">
               <div className={styles.boxUltimas}>
-             <Ultimas/>
+             <Ultimas usuarioId={usuarioId}/>
               </div>
             </div>
             </div>
@@ -73,12 +73,12 @@ console.log(usuarioId);
           <div className="row">
             <div className="col">
               <div className={styles.boxSaldo}>
-                <Proximos/>
+                <Proximos usuarioId={usuarioId}/>
               </div>
             </div>
             <div className="col">
               <div className={styles.boxUltimas}>
-                <Futuras/>
+                <Futuras usuarioId={usuarioId}/>
               </div>
             </div>
             </div>

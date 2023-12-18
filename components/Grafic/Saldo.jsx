@@ -8,38 +8,53 @@ export default function Saldo() {
   const router = useRouter();
   const usuarioId = router.query.usuarioId;
 
-
-
+  const chartRef = useRef();
+  const myChart = useRef(null);
+  const [entradaData, setEntradaData] = useState([]);
+  const [saidaData, setSaidaData] = useState([]);
 
   useEffect(() => {
     if (usuarioId) {
       console.log('Usuário ID:', usuarioId);
       // Lógica adicional que depende de usuarioId
-    }})
+    }
     
-
-
-
-  const chartRef = useRef();
-  const myChart = useRef(null);
-  const [entradaData, setEntradaData] = useState(0);
-  const [saidaData, setSaidaData] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async (url, setData) => {
+    
+    async function getDadosGrafico() {
       try {
-        const response = await fetch(url);
-        const data = await response.json();
-        // Converte a string para número
-        setData(Number(data[0]?.total) || 0);
-      } catch (error) {
-        console.error(`Erro ao buscar dados da API ${url}:`, error);
-      }
-    };
+        if (!usuarioId) {
+         
+          return;
+        }
 
-    fetchData(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=12&ano=2023`, setEntradaData);
-    fetchData(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=12&ano=2023`, setSaidaData);
-  }, []);
+        const response = await fetch(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=11&ano=2023`);
+        const response2 = await fetch(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=11&ano=2023`);
+        
+        if (!response.ok) {
+          
+          console.error('Erro ao obter dados:', response.statusText);
+          return;
+        }
+
+        const dados = await response.json();
+        const dados2 = await response2.json()
+        
+       // console.log(dados);
+        setEntradaData(Number(dados[0]?.total) || 0);
+        setSaidaData(Number(dados2[0]?.total) || 0);
+      } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+      }
+    }
+
+    getDadosGrafico();
+  }, [usuarioId]);
+
+
+
+
+  
+
 
   useEffect(() => {
     const saldoData = entradaData - saidaData;
