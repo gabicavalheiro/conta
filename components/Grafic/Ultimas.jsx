@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from 'next/router';
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styles from './Ultimas.module.css';
@@ -11,6 +12,8 @@ function Ultimas() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [apiData, setApiData] = useState([]);
     const [exibirGrafico, setExibirGrafico] = useState(true);
+    const router = useRouter();
+    const { usuarioId } = router.query;
 
     const tamanhoPagina = 4;
 
@@ -34,7 +37,12 @@ function Ultimas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://api-conta-certa-production.up.railway.app/graphpassadas/21?mes=12&ano=2023');
+                if (!usuarioId) {
+                    // Se o usuarioId não estiver disponível, não fazemos a requisição
+                    return;
+                }
+
+                const response = await axios.get(`https://api-conta-certa-production.up.railway.app/graphpassadas/${usuarioId}?mes=12&ano=2023`);
                 setApiData(response.data.map(entry => ({
                     ...entry,
                     descricao: entry.descricao ? entry.descricao.charAt(0).toUpperCase() + entry.descricao.slice(1) : 'Aleatórios',
@@ -44,8 +52,9 @@ function Ultimas() {
             }
         };
 
+        // Chamar a função para buscar dados ao carregar o componente
         fetchData();
-    }, []);
+    }, [usuarioId]);
 
     console.log(proximosDados, "oi");
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { ptBR } from 'date-fns/locale';
+import { useRouter } from 'next/router';
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import styles from './Ultimas.module.css';
@@ -8,6 +9,8 @@ import styles from './Ultimas.module.css';
 function Proximos() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [dadosDaTabela, setDadosDaTabela] = useState([]);
+    const router = useRouter();
+    const { usuarioId } = router.query;
 
     const tamanhoPagina = 4;
 
@@ -15,7 +18,18 @@ function Proximos() {
         // Função para buscar dados da API
         const fetchData = async () => {
             try {
-                const response = await fetch("https://api-conta-certa-production.up.railway.app/graphproximos/21?mes=11&ano=2023");
+                if (!usuarioId) {
+                    // Se o usuárioId não estiver disponível, não fazemos a requisição
+                    return;
+                }
+
+                const response = await fetch(`https://api-conta-certa-production.up.railway.app/graphproximos/${usuarioId}?mes=11&ano=2023`);
+                
+                if (!response.ok) {
+                    console.error("Erro ao buscar dados da API:", response.statusText);
+                    return;
+                }
+
                 const data = await response.json();
                 // Organizar os dados por descrição
                 const dadosOrdenados = data.sort((a, b) => a.descricao.localeCompare(b.descricao));
@@ -27,7 +41,7 @@ function Proximos() {
 
         // Chamar a função para buscar dados ao carregar o componente
         fetchData();
-    }, []);
+    }, [usuarioId]);
 
     const proximosDados = dadosDaTabela.slice(indiceAtual, indiceAtual + tamanhoPagina);
 
