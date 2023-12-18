@@ -7,25 +7,8 @@ import Chart from 'chart.js/auto';
 import axios from 'axios';
 import { format } from "date-fns";
 import { ptBR } from 'date-fns/locale';
-import { useRouter } from "next/router";
 
 function Ultimas() {
-
-    const router = useRouter();
-    const usuarioId = router.query.usuarioId;
-
-  
-  
-    useEffect(() => {
-      if (usuarioId) {
-        console.log('Usuário ID:', usuarioId);
-         
-      }
-    }, [usuarioId]);
-
-
-
-
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [apiData, setApiData] = useState([]);
     const [exibirGrafico, setExibirGrafico] = useState(true);
@@ -50,9 +33,6 @@ function Ultimas() {
 
     const chartRef = useRef();
     const myChart = useRef(null);
-
-   const url =  await  `https://api-conta-certa-production.up.railway.app/graphpassadas/${usuarioId}?mes=11&ano=2023`
-
 
     useEffect(() => {
         const fetchData = async () => {

@@ -97,6 +97,24 @@ export default function AddPanel() {
     };
 
 
+    const handleAddCategory = () => {
+        MySwal.fire({
+          title: 'Adicionar Nova Categoria',
+          input: 'text',
+          inputPlaceholder: 'Digite o nome da nova categoria',
+          showCancelButton: true,
+          confirmButtonText: 'Adicionar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#009C86',
+
+          preConfirm: (newCategory) => {
+            // Handle the new category
+            console.log('Nova categoria:', newCategory);
+            // You can add additional logic here, e.g., send the new category to the server
+            setSelectedCategory(newCategory);
+          },
+        });
+      };
     
 
    
@@ -139,10 +157,10 @@ export default function AddPanel() {
                                                     action1="Administrativo"
                                                     action2="Financeiro"
                                                     action3="Fixos"
-                                                    add="Outro"
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
                                                     onChange={(selectedValue) => setSelectedCategory(selectedValue)}
+                                                    add={handleAddCategory}
                                                 />
                                             </label>
 
