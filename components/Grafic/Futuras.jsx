@@ -95,7 +95,7 @@ export default function Futuras() {
 
   return (
     <div>
-      <h1 style={{ fontSize: '14px', marginTop: '20px', marginBottom: '0', fontWeight: '800' }}>Despesas Futuras</h1>
+      <h1 style={{ fontSize: '14px', marginTop: '20px', marginBottom: '0', fontWeight: '800' }}>Despesas Anuais</h1>
       <canvas ref={chartRef} style={{ width: '400px', padding: '20px', fontWeight: '800' }}></canvas>
     </div>
   );
