@@ -3,11 +3,29 @@ import { format } from "date-fns";
 import { ptBR } from 'date-fns/locale';
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+<<<<<<< HEAD
 import styles from './tableSaldo.module.css';
+=======
+import styles from "./tableSaldo.module.css";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
 
 function Table() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [dadosDaTabela, setDadosDaTabela] = useState([]);
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+
+  
+    useEffect(() => {
+      if (usuarioId) {
+        console.log('Usuário ID:', usuarioId);
+         
+      }
+    }, [usuarioId]);
+
 
     const tamanhoPagina = 4;
 
@@ -15,7 +33,7 @@ function Table() {
         // Função para buscar dados da API
         const fetchData = async () => {
             try {
-                const response = await fetch("https://api-conta-certa-production.up.railway.app/graphproximos/21?mes=11&ano=2023");
+                const response = await fetch(`https://api-conta-certa-production.up.railway.app/graphproximos/${usuarioId}?mes=11&ano=2023`);
                 const data = await response.json();
                 // Organizar os dados por descrição
                 const dadosOrdenados = data.sort((a, b) => a.descricao.localeCompare(b.descricao));

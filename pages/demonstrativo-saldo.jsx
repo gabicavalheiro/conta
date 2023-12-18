@@ -4,10 +4,29 @@ import NavBar from "@/components/NavBar/NavBar";
 import ApiButton from "@/components/button/selectDateButton";
 import Table from "@/components/table/tableSaldo";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
 
 export default function demonstrativoSaldo() {
     const router = useRouter();
     const usuarioId = router.query.usuarioId;
+=======
+import { useEffect } from "react";
+
+export default function demonstrativoSaldo() {
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+
+  
+    useEffect(() => {
+      if (usuarioId) {
+        console.log('Usuário ID:', usuarioId);
+         
+      }
+    }, [usuarioId]);
+
+
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
     return (
 
         <section className={styles.section}>

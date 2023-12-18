@@ -103,6 +103,7 @@ const handleSubmit = async (event) => {
         cancelButtonText: 'Não',
         iconColor: '#009C86'
 
+<<<<<<< HEAD
     }).then((result) => {
         if (result.isConfirmed) {
             // Enviar os dados para o servidor (por exemplo, usando a API Fetch)
@@ -142,6 +143,10 @@ const handleSubmit = async (event) => {
 
 
 
+=======
+
+    
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
     return (
         <section className={styles.page}>
             <>
@@ -170,12 +175,15 @@ const handleSubmit = async (event) => {
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
                                             <input type="number" className={`form-control ${styles.inputName}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Valor" required   {...register("valor")} />
+<<<<<<< HEAD
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Data</label>
                                             <input type="date" className={`form-control ${styles.inputName}`} id="data" aria-describedby="emailHelp" required />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
                                             <input type="number" className={`form-control ${styles.inputName}`} id="valor" aria-describedby="emailHelp" placeholder="Valor" required />
+=======
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
                                         </div>
                                     </div>
                                     <div className={styles.pass}>
@@ -190,7 +198,6 @@ const handleSubmit = async (event) => {
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
                                                     onChange={(selectedValue) => setSelectedCategory(selectedValue)}
-                                                    id="categoria"
                                                 />
                                             </label>
 
@@ -218,8 +225,12 @@ const handleSubmit = async (event) => {
                                             <div className="mb-3 mt-4">
                                                 <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }} id="parcela">
                                                     Número de Parcelas
+<<<<<<< HEAD
                                                     <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")} />
                                                     <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela" required />
+=======
+                                                    <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
                                                 </label>
                                             </div>
                                         </div>
@@ -231,7 +242,10 @@ const handleSubmit = async (event) => {
                                             <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`} id="descricao" >
                                                 Descrição
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao"   {...register("descricao")} />
+<<<<<<< HEAD
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" required />
+=======
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
                                             </label>
                                         </div>
                                     </div>
@@ -244,8 +258,6 @@ const handleSubmit = async (event) => {
                                         <button type="button" className={styles.botao_cancel}>
                                             Cancelar
                                         </button>
-                                        <button type="submit" className={styles.botao_enviar} onClick={handleSubmit} >Confirmar</button>
-                                        <button type="submit" className={styles.botao_cancel}>Cancelar</button>
                                     </div>
                                 </div>
                             </form>
@@ -256,4 +268,11 @@ const handleSubmit = async (event) => {
             </>
         </section >
     )
+<<<<<<< HEAD
 }
+=======
+<<<<<<< Updated upstream
+}
+=======
+>>>>>>> Stashed changes
+>>>>>>> 62a08e53102afdadff255887fca7df549a478c76
