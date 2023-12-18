@@ -13,11 +13,12 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
 import { useRouter } from 'next/router';
 import { useEffect } from "react";
-import Link from "next/link";
-//import { useEffect } from "react";
 
 
 export default function () {
+
+
+
   const router = useRouter();
   const usuarioId = router.query.usuarioId;
 console.log(usuarioId);
@@ -41,9 +42,6 @@ console.log(usuarioId);
             <div className="col">
               <div className={styles.boxSaldo}>
                 <Saldo />
-                <div className={styles.aaa}>
-                <Link href={{ pathname: '/demonstrativo-saldo', query: { usuarioId } }}> <i className={`bi bi-search ${styles.icon}`}></i></Link>
-                </div>
               </div>
             </div>
             <div className="col">
