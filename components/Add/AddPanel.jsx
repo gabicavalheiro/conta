@@ -97,6 +97,7 @@ export default function AddPanel() {
     };
 
 
+
     
 
    
@@ -139,10 +140,10 @@ export default function AddPanel() {
                                                     action1="Administrativo"
                                                     action2="Financeiro"
                                                     action3="Fixos"
-                                                    add="Outro"
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
                                                     onChange={(selectedValue) => setSelectedCategory(selectedValue)}
+                                                    add
                                                 />
                                             </label>
 
@@ -156,9 +157,9 @@ export default function AddPanel() {
                                                     action2="Crédito"
                                                     action3="Débito"
                                                     action4="Dinheiro"
-                                                    add="Outro"
                                                     placeholder="Escolha uma método de pagamento"
                                                     onChange={handlePaymentTypeChange}
+                                                    add
                                                 />
                                             </label>
                                         </div>
