@@ -90,6 +90,15 @@ export default function AddSaida() {
         });
     }
 
+    const handleCancelar = () => {
+        
+        router.push({
+            pathname: '/Home',
+            query: { usuarioId},
+          });
+      };
+   
+
     const [isCreditSelected, setIsCreditSelected] = useState(false);
 
     const handlePaymentTypeChange = (value) => {
@@ -185,7 +194,7 @@ export default function AddSaida() {
                                         <button type="submit" className={styles.botao_enviar} >
                                             Confirmar
                                         </button>
-                                        <button type="button" className={styles.botao_cancel}>
+                                        <button type="button" className={styles.botao_cancel} onClick={handleCancelar}>
                                             Cancelar
                                         </button>
                                     </div>
