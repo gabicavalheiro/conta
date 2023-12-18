@@ -10,6 +10,7 @@ import { ptBR } from 'date-fns/locale';
 function Ultimas() {
     const [indiceAtual, setIndiceAtual] = useState(0);
     const [apiData, setApiData] = useState([]);
+    const [exibirGrafico, setExibirGrafico] = useState(true);
 
     const tamanhoPagina = 4;
 
@@ -47,41 +48,51 @@ function Ultimas() {
     }, []);
 
     useEffect(() => {
-        const ctx = chartRef.current.getContext('2d');
+        if (chartRef.current) {
+            const ctx = chartRef.current.getContext('2d');
 
-        if (myChart.current) {
-            myChart.current.destroy();
-        }
+            if (myChart.current) {
+                myChart.current.destroy();
+            }
 
-        const data = {
-            labels: proximosDados.map(entry => entry.descricao),
-            datasets: [{
-                label: 'My First Dataset',
-                data: proximosDados.map(entry => parseFloat(entry.valor.replace("R$", "").replace(",", "."))),
-                backgroundColor: [
-                    'rgba(0, 223, 191, 1)',
-                    'rgba(25, 119, 243, 1)',
-                    'rgba(0, 156, 134, 1)',
-                    'rgba(255, 99, 132, 1)',
-                ],
-                hoverOffset: 4
-            }]
-        };
+            const data = {
+                labels: proximosDados.map(entry => entry.descricao),
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: proximosDados.map(entry => parseFloat(entry.valor.replace("R$", "").replace(",", "."))),
+                    backgroundColor: [
+                        'rgba(0, 223, 191, 1)',
+                        'rgba(25, 119, 243, 1)',
+                        'rgba(0, 156, 134, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    hoverOffset: 4
+                }]
+            };
 
-        const config = {
-            type: 'doughnut',
-            data: data,
-            options: {
-                plugins: {
-                    legend: {
-                        position: 'bottom',
+            const config = {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
                     },
                 },
-            },
-        };
+            };
 
-        myChart.current = new Chart(ctx, config);
+            myChart.current = new Chart(ctx, config);
+        }
     }, [proximosDados]);
+
+    useEffect(() => {
+        if (indiceAtual + tamanhoPagina >= apiData.length) {
+            setExibirGrafico(false);
+        } else {
+            setExibirGrafico(true);
+        }
+    }, [indiceAtual, tamanhoPagina, apiData]);
 
     return (
         <div className="container">
@@ -123,7 +134,9 @@ function Ultimas() {
                     </tr>
                 </tbody>
             </table>
-            <canvas ref={chartRef} style={{ width: '300px', height: '300px', padding: '50px' }}></canvas>
+            {exibirGrafico && (
+                <canvas ref={chartRef} style={{ width: '300px', height: '300px', padding: '50px' }}></canvas>
+            )}
         </div>
     );
 }
