@@ -6,6 +6,13 @@ export default function Fluxo() {
   const chartRef = useRef();
   const myChart = useRef(null);
 
+
+
+
+
+
+
+  
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 

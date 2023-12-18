@@ -106,7 +106,7 @@ export default function AddSaida() {
                 <DropdownButton
                         toggleText="Nova saída"
                         action1Text="Nova entrada"
-                        action1href={`/Adicionar-saida?userId=${usuarioId}`}
+                        action1href={`/Adicionar-conta?usuarioId=${usuarioId}`}
                     />
                    
                 </div>
