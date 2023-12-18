@@ -3,8 +3,23 @@ import styles from './demosntartivo-saldo.module.css'
 import NavBar from "@/components/NavBar/NavBar";
 import ApiButton from "@/components/button/selectDateButton";
 import Table from "@/components/table/tableSaldo";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function demonstrativoSaldo() {
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+
+  
+    useEffect(() => {
+      if (usuarioId) {
+        console.log('Usuário ID:', usuarioId);
+         
+      }
+    }, [usuarioId]);
+
+
     return (
 
         <section className={styles.section}>
@@ -26,7 +41,7 @@ export default function demonstrativoSaldo() {
                         </div>
                     </div>
                     <div className={styles.table}>
-                        <Table />
+                        <Table usuarioId={usuarioId}/>
                     </div>
                 </div>
             </div>
