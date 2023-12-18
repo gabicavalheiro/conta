@@ -97,9 +97,9 @@ function Table() {
 
                 <div className={styles.a}>
                         <div className={styles.boxx}>
-                        <div className={styles.box_entrada}>Entradas: R$ {totalEntradas}</div>
-                        <div className={styles.box_saida}>Saídas: R$ {totalSaidas}</div>
-                        <div className={styles.box_saldo}>Saldo: R$ {saldo}</div>
+                        <div className={styles.box_entrada}>Entradas <div> R$ {totalEntradas}</div></div>
+                        <div className={styles.box_saida}>Saídas  <div> R$ {totalSaidas}</div></div>
+                        <div className={styles.box_saldo}>Saldo  <div> R$ {saldo}</div></div>
                         </div>
                     </div>
 
