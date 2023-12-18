@@ -12,6 +12,7 @@ import Futuras from "@/components/Grafic/Futuras";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import FloatingButton from "@/components/button/FloatingButton";
 import { useRouter } from 'next/router';
+import { useEffect } from "react";
 //import { useEffect } from "react";
 
 

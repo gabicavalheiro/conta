@@ -5,17 +5,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
-<<<<<<< HEAD
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-=======
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
->>>>>>> final_graficos
 
 
 
@@ -74,14 +71,12 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
 
 
     const handlePaymentTypeChange = (value) => {
-<<<<<<< HEAD
         setSelectedPaymentMethod(value);
     };
 
 
 
     
-=======
         setIsCreditSelected(value === "Crédito");
         num_parcelas = document.getElementById('parcela').value;
     };
@@ -155,7 +150,6 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
     }
 
 
->>>>>>> final_graficos
     return (
         <section className={styles.page}>
             <>
@@ -178,21 +172,18 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                 <div className={styles.form}>
                                     <div className={styles.camp}>
                                         <div className="mb-3">
-<<<<<<< HEAD
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}    >Data</label>
                                             <input type="date" className={`form-control ${styles.inputName}`} id={styles.inputName} aria-describedby="emailHelp"  required   {...register("data")}/>
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
                                             <input type="number" className={`form-control ${styles.inputName}`} id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Valor" required   {...register("valor")} />
-=======
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Data</label>
                                             <input type="date" className={`form-control ${styles.inputName}`} id="data" aria-describedby="emailHelp" required />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputEmail1" className="form-label {styles.name}" id={styles.name}>Valor</label>
                                             <input type="number" className={`form-control ${styles.inputName}`} id="valor" aria-describedby="emailHelp" placeholder="Valor" required/>
->>>>>>> final_graficos
                                         </div>
                                     </div>
                                     <div className={styles.pass}>
@@ -206,11 +197,8 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                                     add="Adicionar Categoria"
                                                     placeholder="Escolha uma categoria"
                                                     className={styles.drop}
-<<<<<<< HEAD
                                                     onChange={(selectedValue) => setSelectedCategory(selectedValue)}
-=======
                                                     id="categoria"
->>>>>>> final_graficos
                                                 />
                                             </label>
 
@@ -238,11 +226,8 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                             <div className="mb-3 mt-4">
                                                 <label htmlFor="exampleInputPassword1" className="form-label" style={{ fontWeight: "bolder" }} id="parcela">
                                                     Número de Parcelas
-<<<<<<< HEAD
                                                     <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela"    {...register("num_parcelas")}/>
-=======
                                                     <input type="number" className={`form-control mt-3 ${styles.parc}`} id="parcela" required />
->>>>>>> final_graficos
                                                 </label>
                                             </div>
                                         </div>
@@ -253,28 +238,22 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
                                         <div className="mb-3">
                                             <label htmlFor="exampleInputPassword1" className={`form-label ${styles.desc}`}  id="descricao" >
                                                 Descrição
-<<<<<<< HEAD
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao"   {...register("descricao")} />
-=======
                                                 <input type="text" className={`form-control mt-3 ${styles.descc}`} id="descricao" required/>
->>>>>>> final_graficos
                                             </label>
                                         </div>
                                     </div>
 
 
                                     <div className={styles.botoes}>
-<<<<<<< HEAD
                                         <button type="submit" className={styles.botao_enviar} >
                                             Confirmar
                                         </button>
                                         <button type="button" className={styles.botao_cancel}>
                                             Cancelar
                                         </button>
-=======
                                         <button type="submit" className={styles.botao_enviar} onClick={handleSubmit} >Confirmar</button>
                                         <button type="submit" className={styles.botao_cancel}>Cancelar</button>
->>>>>>> final_graficos
                                     </div>
                                 </div>
                             </form>
@@ -285,4 +264,4 @@ export default function AddPanel({ isCardConfirmVisible, onEnviarClick, onCancel
         </>
         </section >
     )
-}
+
