@@ -2,15 +2,26 @@ import DropdownWithInput from '../button/DropdownInput';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdicionarSaida from "@/pages/Adicionar-saida";
 import { useForm } from "react-hook-form"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './AddPanel.module.css'
 import DropdownButton from '../button/DropdownButton';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import { useRouter } from 'next/router';
 
 const MySwal = withReactContent(Swal);
 
 export default function AddPanel() {
+
+    const router = useRouter();
+    const usuarioId = router.query.usuarioId;
+
+
+    useEffect(() => {
+        if (usuarioId) {
+          console.log('Usuário ID ass painel:', usuarioId);
+        }
+      }, [usuarioId]);
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -86,6 +97,8 @@ export default function AddPanel() {
     };
 
 
+    
+
    
 
     return (
@@ -95,10 +108,10 @@ export default function AddPanel() {
                 <div className={styles.button}>
 
 
-                    <DropdownButton
+                <DropdownButton
                         toggleText="Nova entrada"
                         action1Text="Nova saída"
-                        action1href="/Adicionar-saida"
+                        action1href={`/Adicionar-entrada?userId=${usuarioId}`}
                     />
 
                 </div>
