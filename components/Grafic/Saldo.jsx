@@ -1,8 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 import 'chartjs-plugin-datalabels';
+import { useRouter } from 'next/router';
 
 export default function Saldo() {
+
+  const router = useRouter();
+  const usuarioId = router.query.usuarioId;
+
+
+
+
+  useEffect(() => {
+    if (usuarioId) {
+      console.log('Usuário ID:', usuarioId);
+      // Lógica adicional que depende de usuarioId
+    }})
+    
+
+
+
   const chartRef = useRef();
   const myChart = useRef(null);
   const [entradaData, setEntradaData] = useState(0);
@@ -20,8 +37,8 @@ export default function Saldo() {
       }
     };
 
-    fetchData('https://api-conta-certa-production.up.railway.app/totalEntradas/21?mes=12&ano=2023', setEntradaData);
-    fetchData('https://api-conta-certa-production.up.railway.app/totalSaidas/21?mes=12&ano=2023', setSaidaData);
+    fetchData(`https://api-conta-certa-production.up.railway.app/totalEntradas/${usuarioId}?mes=12&ano=2023`, setEntradaData);
+    fetchData(`https://api-conta-certa-production.up.railway.app/totalSaidas/${usuarioId}?mes=12&ano=2023`, setSaidaData);
   }, []);
 
   useEffect(() => {

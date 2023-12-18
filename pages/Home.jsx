@@ -41,7 +41,7 @@ console.log(usuarioId);
           <div className="row">
             <div className="col">
               <div className={styles.boxSaldo}>
-                <Saldo />
+                <Saldo usuarioId={usuarioId}/>
               </div>
             </div>
             <div className="col">
