@@ -174,9 +174,9 @@ export default function AddPanel() {
                                                     action2="Crédito"
                                                     action3="Débito"
                                                     action4="Dinheiro"
-                                                    add="Outro"
                                                     placeholder="Escolha uma método de pagamento"
                                                     onChange={handlePaymentTypeChange}
+                                                    add
                                                 />
                                             </label>
                                         </div>
