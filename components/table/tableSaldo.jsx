@@ -3,13 +3,7 @@ import { format } from "date-fns";
 import { ptBR } from 'date-fns/locale';
 import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
-<<<<<<< HEAD
 import styles from './tableSaldo.module.css';
-=======
-import styles from "./tableSaldo.module.css";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
->>>>>>> 62a08e53102afdadff255887fca7df549a478c76
 
 function Table() {
     const [indiceAtual, setIndiceAtual] = useState(0);
